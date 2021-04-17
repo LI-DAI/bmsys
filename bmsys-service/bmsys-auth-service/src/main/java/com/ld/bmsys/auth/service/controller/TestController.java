@@ -21,7 +21,7 @@ public class TestController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasAnyAuthority('user::add')")
+    @PreAuthorize("hasAnyAuthority('user:add')")
     public Result<String> testAuthority() {
         return Result.data("this is test");
     }

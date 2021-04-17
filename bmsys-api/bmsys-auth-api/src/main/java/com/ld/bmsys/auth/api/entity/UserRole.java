@@ -1,5 +1,8 @@
 package com.ld.bmsys.auth.api.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,9 +14,13 @@ import java.io.Serializable;
  * @Date 2020/3/5 21:39
  */
 @Data
-@ApiModel(value = "com.ld.bmsys.auth.api.entity.UserRole")
+@TableName(value = "bmsys_user_role")
+@ApiModel(value = "用户角色")
 public class UserRole implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "ID")
     private Integer userRoleId;
 
@@ -23,6 +30,13 @@ public class UserRole implements Serializable {
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 
-    private static final long serialVersionUID = 1L;
+    public UserRole() {
+    }
+
+    public UserRole(Integer userRoleId, Integer userId, Integer roleId) {
+        this.userRoleId = userRoleId;
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }
 

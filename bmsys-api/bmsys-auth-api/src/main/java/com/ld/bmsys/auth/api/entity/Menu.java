@@ -1,25 +1,22 @@
 package com.ld.bmsys.auth.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Author ld
  * @Date 2020/3/5 21:39
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "com.ld.bmsys.auth.api.entity.Menu")
+@TableName(value = "bmsys_menu")
+@ApiModel(value = "菜单")
 public class Menu implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "菜单ID")
     private Integer menuId;
@@ -45,25 +42,22 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "权限标识")
     private String perms;
 
-    @ApiModelProperty(value = "创建者")
-    private String createBy;
-
-    @ApiModelProperty(value = "创建时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
-
-    @ApiModelProperty(value = "更新者")
-    private String updateBy;
-
-    @ApiModelProperty(value = "更新时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date updateTime;
-
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    private static final long serialVersionUID = 1L;
+    public Menu() {
+    }
+
+    public Menu(Integer menuId, String menuName, Integer parentId, Integer orderNum, String url, String menuType, String visible, String perms, String remark) {
+        this.menuId = menuId;
+        this.menuName = menuName;
+        this.parentId = parentId;
+        this.orderNum = orderNum;
+        this.url = url;
+        this.menuType = menuType;
+        this.visible = visible;
+        this.perms = perms;
+        this.remark = remark;
+    }
 }
 

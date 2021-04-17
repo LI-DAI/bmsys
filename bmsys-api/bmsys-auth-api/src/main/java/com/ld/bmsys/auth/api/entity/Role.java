@@ -1,12 +1,11 @@
 package com.ld.bmsys.auth.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,11 +15,13 @@ import java.util.Date;
  * @Date 2020/3/5 13:56
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "com.ld.bmsys.auth.api.entity.Role")
+@TableName(value = "bmsys_role")
+@ApiModel(value = "角色")
 public class Role implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 
@@ -46,21 +47,33 @@ public class Role implements Serializable {
     private String createBy;
 
     @ApiModelProperty(value = "创建时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     @ApiModelProperty(value = "更新者")
     private String updateBy;
 
     @ApiModelProperty(value = "更新时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    private static final long serialVersionUID = 1L;
+    public Role() {
+    }
+
+    public Role(Integer roleId, String roleName, String roleKey, Integer roleSort, String status, String roleType, Integer parentId, String createBy, Date createTime, String updateBy, Date updateTime, String remark) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+        this.roleKey = roleKey;
+        this.roleSort = roleSort;
+        this.status = status;
+        this.roleType = roleType;
+        this.parentId = parentId;
+        this.createBy = createBy;
+        this.createTime = createTime;
+        this.updateBy = updateBy;
+        this.updateTime = updateTime;
+        this.remark = remark;
+    }
 }
 
