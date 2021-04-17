@@ -40,28 +40,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User findUserByUsername(String username) {
-        return userMapper.findByUserName(username);
+        Wrapper<User> wrapper = Wrappers.<User>query().lambda().eq(User::getUsername, username);
+        return userMapper.selectOne(wrapper);
     }
 
     @Override
     public boolean register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.save(user);
-    }
-
-    @Override
-    public int insertUserRole(List<UserRole> userRoles) {
-        return userRoleMapper.batchInsert(userRoles);
-    }
-
-    @Override
-    public int deleteUserRoleByUserId(List<Integer> userIds) {
-        return userRoleMapper.deleteUserRoleByUserId(userIds);
-    }
-
-    @Override
-    public int deleteUserRoleByRoleId(List<Integer> roleIds) {
-        return userRoleMapper.deleteUserRoleByRoleId(roleIds);
     }
 
     @Override

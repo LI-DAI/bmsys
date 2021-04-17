@@ -1,5 +1,6 @@
 package com.ld.bmsys.auth.service.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ld.bmsys.auth.api.entity.Menu;
 import com.ld.bmsys.auth.service.dao.MenuMapper;
 import com.ld.bmsys.auth.service.service.MenuService;
@@ -15,10 +16,13 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
-    @Autowired
-    private MenuMapper menuMapper;
+    private final MenuMapper menuMapper;
+
+    public MenuServiceImpl(MenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
 
     @Override
     public List<Menu> loadAllMenus() {

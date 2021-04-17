@@ -1,11 +1,14 @@
 package com.ld.bmsys.auth.service.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ld.bmsys.auth.api.entity.Role;
 import com.ld.bmsys.auth.api.entity.RoleMenu;
+import com.ld.bmsys.auth.api.entity.UserRole;
 import com.ld.bmsys.auth.service.dao.RoleMapper;
 import com.ld.bmsys.auth.service.dao.RoleMenuMapper;
+import com.ld.bmsys.auth.service.dao.UserRoleMapper;
 import com.ld.bmsys.auth.service.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,39 +20,25 @@ import java.util.List;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
-    private final RoleMapper roleMapper;
     private final RoleMenuMapper roleMenuMapper;
 
-    public RoleServiceImpl(RoleMapper roleMapper, RoleMenuMapper roleMenuMapper) {
-        this.roleMapper = roleMapper;
+    private final UserRoleMapper userRoleMapper;
+
+    public RoleServiceImpl(RoleMenuMapper roleMenuMapper, UserRoleMapper userRoleMapper) {
         this.roleMenuMapper = roleMenuMapper;
+        this.userRoleMapper = userRoleMapper;
     }
 
     @Override
-    public int insertRole(Role role) {
-//        role.setRoleKey("ROLE_" + role.getRoleKey());
-        return roleMapper.insertSelective(role);
-    }
-
-    @Override
-    public int updateRole(Role role) {
-        return roleMapper.updateByPrimaryKeySelective(role);
-    }
-
-    @Override
-    public int deleteRole(List<String> ids) {
-        return 0;
-    }
-
-    @Override
-    public int insertRoleMenu(List<RoleMenu> roleMenus) {
-        return roleMenuMapper.batchInsert(roleMenus);
-    }
-
-    @Override
-    public int deleteByRoleIds(List<Integer> roleIds) {
-        return 0;
+    public void deleteRoles(List<Integer> roleIds) {
+        //判断角色是否被占用
+        Integer count = userRoleMapper.selectCount(Wrappers.<UserRole>lambdaQuery().in(UserRole::getRoleId, roleIds));
+        if (count > 0) {
+            throw new RuntimeException("角色正在被占用，无法删除");
+        }
+        this.removeByIds(roleIds);
+        roleMenuMapper.delete(Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getRoleId, roleIds));
     }
 }

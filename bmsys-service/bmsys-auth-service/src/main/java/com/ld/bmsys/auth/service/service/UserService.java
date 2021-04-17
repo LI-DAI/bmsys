@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.api.entity.UserRole;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
-import com.ld.bmsys.common.entity.PageData;
 
 import java.util.List;
 
@@ -26,16 +25,16 @@ public interface UserService extends IService<User> {
     /**
      * 注册
      *
-     * @param user
+     * @param user 用户信息
      * @return
      */
     boolean register(User user);
 
-    int insertUserRole(List<UserRole> userRoles);
-
-    int deleteUserRoleByUserId(List<Integer> userIds);
-
-    int deleteUserRoleByRoleId(List<Integer> roleIds);
-
+    /**
+     * 获取用户列表
+     *
+     * @param searchConditionVO 搜索条件
+     * @return
+     */
     Page<User> getUserList(SearchConditionVO searchConditionVO);
 }

@@ -10,11 +10,7 @@
         <result column="menu_type" property="menuType"/>
         <result column="visible" property="visible"/>
         <result column="perms" property="perms"/>
-        <result column="*" property="createBy"/>
-        <result column="*" property="createTime"/>
-        <result column="*" property="updateBy"/>
-        <result column="*" property="updateTime"/>
-        <result column="*" property="remark"/>
+        <result column="remark" property="remark"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -26,10 +22,6 @@
         menu_type,
         visible,
         perms,
-        create_by,
-        create_time,
-        update_by,
-        update_time,
         remark
     </sql>
 

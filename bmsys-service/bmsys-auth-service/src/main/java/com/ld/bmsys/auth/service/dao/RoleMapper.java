@@ -1,6 +1,8 @@
 package com.ld.bmsys.auth.service.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ld.bmsys.auth.api.entity.Role;
+import com.ld.bmsys.auth.api.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,31 +11,7 @@ import java.util.List;
  * @Author ld
  * @Date 2020/3/5 21:39
  */
-public interface RoleMapper {
-
-    /**
-     * 新增
-     *
-     * @param record
-     * @return
-     */
-    int insertSelective(Role record);
-
-    /**
-     * 获取
-     *
-     * @param roleId
-     * @return
-     */
-    Role selectByPrimaryKey(Integer roleId);
-
-    /**
-     * 修改
-     *
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeySelective(Role record);
+public interface RoleMapper extends BaseMapper<Role> {
 
     /**
      * 获取roles

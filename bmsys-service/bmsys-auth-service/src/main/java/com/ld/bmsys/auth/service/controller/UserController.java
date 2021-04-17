@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.api.entity.UserRole;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
+import com.ld.bmsys.auth.service.service.UserRoleService;
 import com.ld.bmsys.auth.service.service.UserService;
 import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
@@ -22,9 +23,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRoleService userRoleService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRoleService userRoleService) {
         this.userService = userService;
+        this.userRoleService = userRoleService;
     }
 
     @PostMapping("/hello")
@@ -47,8 +50,8 @@ public class UserController {
 
     @PostMapping("/add/user_role")
     @ApiOperation("新增UserRole")
-    public Result<Integer> insertUserRole(@RequestBody List<UserRole> userRoles) {
-        return Result.data(userService.insertUserRole(userRoles));
+    public Result<Boolean> insertUserRole(@RequestBody List<UserRole> userRoles) {
+        return Result.data(userRoleService.saveBatch(userRoles));
     }
 
     @PostMapping("/list")

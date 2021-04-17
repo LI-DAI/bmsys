@@ -1,7 +1,7 @@
 package com.ld.bmsys.auth.service.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ld.bmsys.auth.api.entity.Role;
-import com.ld.bmsys.auth.api.entity.RoleMenu;
 
 import java.util.List;
 
@@ -9,20 +9,14 @@ import java.util.List;
  * @Author ld
  * @Date 2020/3/26 15:06
  */
-public interface RoleService {
-
-    int insertRole(Role role);
-
-    int updateRole(Role role);
-
-    int deleteRole(List<String> ids);
-
-    int insertRoleMenu(List<RoleMenu> roleMenus);
+public interface RoleService extends IService<Role> {
 
     /**
-     * 删除
-     * @param roleIds 角色ID
+     * 删除角色
+     *
+     * @param roleIds
      * @return
      */
-    int deleteByRoleIds(List<Integer> roleIds);
+    void deleteRoles(List<Integer> roleIds);
+
 }

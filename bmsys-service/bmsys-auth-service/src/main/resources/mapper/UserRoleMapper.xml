@@ -13,15 +13,6 @@
         role_id
     </sql>
 
-    <insert id="batchInsert" keyColumn="user_role_id" keyProperty="userRoleId" parameterType="map"
-            useGeneratedKeys="true">
-        insert into bmsys_user_role
-        (user_id, role_id)
-        values
-        <foreach collection="list" item="item" separator=",">
-            (#{item.userId,jdbcType=INTEGER}, #{item.roleId,jdbcType=INTEGER})
-        </foreach>
-    </insert>
 
     <delete id="deleteUserRoleByUserId">
         delete from bmsys_user_role where user_id in

@@ -20,6 +20,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for bmsys_menu
 -- ----------------------------
+DROP TABLE IF EXISTS `bmsys_menu`;
 CREATE TABLE `bmsys_menu` (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
@@ -87,6 +88,7 @@ INSERT INTO `bmsys`.`bmsys_role_menu` (`role_id`, `menu_id`) VALUES ( 1, 104);
 -- ----------------------------
 -- Table structure for bmsys_user
 -- ----------------------------
+DROP TABLE IF EXISTS `bmsys_user`;
 CREATE TABLE `bmsys_user` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(255) NOT NULL COMMENT '姓名',
@@ -116,6 +118,6 @@ CREATE TABLE `bmsys_user_role`  (
   PRIMARY KEY (`user_role_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
 
-INSERT INTO `bmsys`.`bmsys_user_role` (`user_id`, `role_id`) VALUES (2, 1);
+INSERT INTO `bmsys`.`bmsys_user_role` (`user_id`, `role_id`) VALUES (1, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

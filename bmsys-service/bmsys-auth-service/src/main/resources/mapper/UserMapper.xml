@@ -13,10 +13,8 @@
         <result column="department" property="department"/>
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
-        <result column="delete_flag" property="deleteFlag"/>
-        <result column="create_by" property="createBy"/>
+        <result column="email" property="enabled"/>
         <result column="create_time" property="createTime"/>
-        <result column="update_by" property="updateBy"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
@@ -33,32 +31,8 @@
         status,
         remark,
         delete_flag,
-        create_by,
         create_time,
-        update_by,
         update_time
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from bmsys_user
-        where user_id = #{userId,jdbcType=INTEGER}
-    </select>
-
-
-
-    <select id="findByUserName" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from bmsys_user where delete_flag = 'N' and username = #{username}
-    </select>
-
-    <select id="getUserList" resultMap="BaseResultMap">
-        select * from bmsys_user
-        <where>
-            <if test="username != null and username != ''">and username like concat('%',#{username},'%')</if>
-            <if test="phone != null and phone != ''">and phone = #{phone}</if>
-        </where>
-    </select>
 </mapper>

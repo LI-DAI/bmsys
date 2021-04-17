@@ -11,12 +11,4 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper extends BaseMapper<User> {
 
 
-    /**
-     * 根据username获取用户
-     *
-     * @param username 用户名
-     * @return user
-     */
-    User findByUserName(@Param("username") String username);
-
 }

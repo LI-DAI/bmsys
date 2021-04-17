@@ -2,6 +2,7 @@ package com.ld.bmsys.auth.service.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ld.bmsys.auth.api.entity.Menu;
 import com.ld.bmsys.auth.api.entity.Role;
 import com.ld.bmsys.auth.api.entity.User;
@@ -53,7 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.findByUserName(username);
+        User user = userMapper.selectOne(Wrappers.<User>query().lambda().eq(User::getUsername, username));
         if (user == null) {
             throw new UsernameNotFoundException("user not found");
         }
@@ -85,4 +86,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new AuthUser(user.getUserId(), username, user.getEmail(), user.getPassword(), authorities);
 
     }
+
 }
