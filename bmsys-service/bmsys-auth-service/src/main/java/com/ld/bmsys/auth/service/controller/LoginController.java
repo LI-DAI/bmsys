@@ -1,7 +1,6 @@
 package com.ld.bmsys.auth.service.controller;
 
 import cn.hutool.core.map.MapUtil;
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.service.security.SecurityProperties;
@@ -10,8 +9,6 @@ import com.ld.bmsys.auth.service.service.OnlineUserService;
 import com.ld.bmsys.auth.service.utils.JwtTokenUtil;
 import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static com.ld.bmsys.common.constant.CommonConstant.AUTHENTICATION;
 
