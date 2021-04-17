@@ -1,0 +1,35 @@
+package com.ld.bmsys.common.constant;
+
+/**
+ * @Author lidai
+ * @Date 2020/3/5 11:01
+ */
+public interface CommonConstant {
+
+    int ENABLED = 0;
+    int DISABLED = 1;
+
+    int USER_LOCKED = 1;
+    int USER_UNLOCKED = 0;
+
+    String DEFAULT_NULL_MESSAGE = "暂无数据";
+    String DEFAULT_SUCCESS_MESSAGE = "操作成功";
+    String DEFAULT_FAILURE_MESSAGE = "操作失败";
+    String DEFAULT_UNAUTHORIZED_MESSAGE = "签名认证失败";
+
+
+    String AUTH_SERVICE_NAME = "bmsys-auth-service";
+    String DICT_SERVICE_NAME = "bmsys-dict-service";
+
+    String REGEX_EMAIL = "^\\s*?(.+)@(.+?)\\s*$";
+
+    String UTF_8 = "UTF-8";
+    String AUTHENTICATION = "Token";
+
+    String AUTHORITIES_CACHE_PREFIX = "authorities_";
+
+    static String getAuthoritiesCacheName(String username) {
+        return AUTHORITIES_CACHE_PREFIX + username;
+    }
+
+}

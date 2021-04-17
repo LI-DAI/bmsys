@@ -1,0 +1,56 @@
+POST http://{{host}}/user/list
+Content-Type: application/json
+Token: {{auth_token}}
+
+{
+  "pageNum": 1,
+  "pageSize": 10
+}
+
+
+
+### 注销
+GET http://{{host}}/auth/logout
+Content-Type: application/json
+
+
+###
+POST http://{{host}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "lidai",
+  "password": "1"
+}
+
+> {% client.global.set("auth_token",response.body.data.token) %}
+
+###
+POST http://{{host}}/user/hello
+Accept: */*
+Cache-Control: no-cache
+
+
+###
+
+POST http://{{host}}/user/register
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "1",
+  "nickname": "Test",
+  "email": "123@qq.com"
+}
+
+###
+
+POST http://{{host}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=lidai&password=1
+
+> {% client.global.set("auth_token", response.body.data); %}
+
+###
+

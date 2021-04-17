@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ld.bmsys.auth.service.dao.RoleMenuMapper">
+    <resultMap id="BaseResultMap" type="com.ld.bmsys.auth.api.entity.RoleMenu">
+        <id column="role_menu_id" jdbcType="INTEGER" property="roleMenuId"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="menu_id" jdbcType="INTEGER" property="menuId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        role_menu_id,
+        role_id,
+        menu_id
+    </sql>
+
+    <insert id="batchInsert" keyColumn="role_menu_id" keyProperty="roleMenuId" parameterType="map"
+            useGeneratedKeys="true">
+        insert into bmsys_role_menu
+        (role_id, menu_id)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleId,jdbcType=INTEGER}, #{item.menuId,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteRoleMenuByRoleIds">
+        delete from bmsys_role_menu where role_id in
+        <foreach collection="roleIds" open="(" close=")" item="roleId" separator=",">
+            #{roleId}
+        </foreach>
+    </delete>
+</mapper>

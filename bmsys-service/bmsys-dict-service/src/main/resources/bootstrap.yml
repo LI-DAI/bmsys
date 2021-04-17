@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        prefix: dict
+        file-extension: yml
