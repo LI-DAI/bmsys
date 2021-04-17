@@ -57,10 +57,6 @@ public class LoginController {
         SecurityContextHolder.getContext().setAuthentication(upToken);
         AuthUser authUser = (AuthUser) authentication.getPrincipal();
         String token = securityProperties.getOnlineKey() + JwtTokenUtil.createToken(authUser);
-        //保存上线用户
-//        onlineUserService.saveOnlineUser(authUser, token, request);
-//        onlineUserService.checkOnlineUser(username, token);
-        //存储token，过期时间两个小时
         Map<String, Object> authInfo = ImmutableMap.of("token", token, "user", authUser);
         return Result.data(authInfo, "登陆成功");
     }
