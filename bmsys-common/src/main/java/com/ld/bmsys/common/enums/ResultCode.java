@@ -1,6 +1,5 @@
 package com.ld.bmsys.common.enums;
 
-import com.ld.bmsys.common.entity.IResultCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ResultCode implements IResultCode {
+public enum ResultCode {
 
     SUCCESS(200, "操作成功"),
     FAILURE(500, "操作失败"),
@@ -21,13 +20,8 @@ public enum ResultCode implements IResultCode {
     LOCKED(-103, "账户已锁定"),
     EXPIRE_TOKEN(-200, "无效的Token");
 
-    /**
-     * code编码
-     */
     final int code;
-    /**
-     * 中文信息描述
-     */
+
     final String message;
 
 }

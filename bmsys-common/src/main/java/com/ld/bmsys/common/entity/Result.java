@@ -23,19 +23,19 @@ public class Result<T> implements Serializable {
 
     private T data;
 
-    private Result(IResultCode resultCode) {
+    private Result(ResultCode resultCode) {
         this(resultCode, null, resultCode.getMessage());
     }
 
-    private Result(IResultCode resultCode, String msg) {
+    private Result(ResultCode resultCode, String msg) {
         this(resultCode, null, msg);
     }
 
-    private Result(IResultCode resultCode, T data) {
+    private Result(ResultCode resultCode, T data) {
         this(resultCode, data, resultCode.getMessage());
     }
 
-    private Result(IResultCode resultCode, T data, String msg) {
+    private Result(ResultCode resultCode, T data, String msg) {
         this(resultCode.getCode(), data, msg);
     }
 
@@ -73,11 +73,11 @@ public class Result<T> implements Serializable {
         return new Result<>(code, null, msg);
     }
 
-    public static <T> Result<T> fail(IResultCode resultCode) {
+    public static <T> Result<T> fail(ResultCode resultCode) {
         return new Result<>(resultCode);
     }
 
-    public static <T> Result<T> fail(IResultCode resultCode, String msg) {
+    public static <T> Result<T> fail(ResultCode resultCode, String msg) {
         return new Result<>(resultCode, msg);
     }
 
