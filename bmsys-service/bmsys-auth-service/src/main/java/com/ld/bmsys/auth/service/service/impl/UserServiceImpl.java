@@ -7,17 +7,15 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ld.bmsys.auth.api.entity.User;
-import com.ld.bmsys.auth.api.entity.UserRole;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
 import com.ld.bmsys.auth.service.dao.UserMapper;
 import com.ld.bmsys.auth.service.dao.UserRoleMapper;
 import com.ld.bmsys.auth.service.service.UserService;
+import com.ld.bmsys.common.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @Author ld
@@ -30,12 +28,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final UserRoleMapper userRoleMapper;
 
-    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, UserRoleMapper userRoleMapper) {
+    public UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
-        this.userRoleMapper = userRoleMapper;
     }
 
     @Override
@@ -46,6 +42,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean register(User user) {
+        Integer count = userMapper.selectCount(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()));
+        if (count > 0) {
+            throw new BadRequestException("用户名已存在");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return this.save(user);
     }
@@ -54,10 +54,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Page<User> getUserList(SearchConditionVO search) {
         Page<User> page = new Page<>(search.getPageNum(), search.getPageSize());
         LambdaQueryWrapper<User> query = Wrappers.<User>query().lambda();
-        if(StrUtil.isNotBlank(search.getUsername())){
+        if (StrUtil.isNotBlank(search.getUsername())) {
             query.like(User::getUsername, search.getUsername());
         }
-        if(StrUtil.isNotBlank(search.getPhone())){
+        if (StrUtil.isNotBlank(search.getPhone())) {
             query.eq(User::getPhone, search.getPhone());
         }
         return userMapper.selectPage(page, query);

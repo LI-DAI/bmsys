@@ -33,7 +33,7 @@ public class RoleController {
     @PostMapping("/insert")
     @ApiOperation("新增角色")
     public Result<Boolean> addRole(@RequestBody @Valid Role role) {
-        return Result.data(roleService.save(role));
+        return Result.data(roleService.addRole(role));
     }
 
     @PostMapping("/add/menus")

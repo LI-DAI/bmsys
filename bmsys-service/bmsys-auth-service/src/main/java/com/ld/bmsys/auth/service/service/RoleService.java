@@ -14,9 +14,17 @@ public interface RoleService extends IService<Role> {
     /**
      * 删除角色
      *
-     * @param roleIds
+     * @param roleIds 角色ID集合
      * @return
      */
     void deleteRoles(List<Integer> roleIds);
+
+    /**
+     * 添加角色
+     *
+     * @param role 角色信息
+     * @return
+     */
+    boolean addRole(Role role);
 
 }
