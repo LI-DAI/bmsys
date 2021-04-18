@@ -62,7 +62,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String authoritiesCacheName = getAuthoritiesCacheName(username);
         if (redisTemplate.hasKey(authoritiesCacheName)) {
             //直接从缓存中取
-            String authoritiesStr = redisTemplate.opsForValue().get(username);
+            String authoritiesStr = redisTemplate.opsForValue().get(authoritiesCacheName);
             if (StrUtil.isNotBlank(authoritiesStr)) {
                 List<SimpleGrantedAuthority> grantedAuthorities = JSON.parseArray(authoritiesStr, SimpleGrantedAuthority.class);
                 if (grantedAuthorities != null && !grantedAuthorities.isEmpty()) {
@@ -71,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
         } else {
             List<Role> roles = roleMapper.getRolesByUserId(user.getUserId());
-            roles.stream().map(role -> "ROLE_" + role.getRoleKey())
+            roles.stream().filter(Objects::nonNull).map(role -> "ROLE_" + role.getRoleKey())
                     .forEach(key -> authorities.addAll(AuthorityUtils.createAuthorityList(key)));
 
             List<Menu> menus = menuMapper.getMenuByUserId(user.getUserId());

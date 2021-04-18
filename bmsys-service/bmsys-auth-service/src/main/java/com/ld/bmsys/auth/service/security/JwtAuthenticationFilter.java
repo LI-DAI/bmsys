@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
-import com.ld.bmsys.auth.service.utils.JwtTokenUtil;
+import com.ld.bmsys.common.utils.JwtTokenUtil;
 import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;

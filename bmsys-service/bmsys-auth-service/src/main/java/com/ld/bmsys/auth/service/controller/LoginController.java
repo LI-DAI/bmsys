@@ -6,8 +6,8 @@ import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.service.security.SecurityProperties;
 import com.ld.bmsys.auth.service.security.vo.AuthUser;
 import com.ld.bmsys.auth.service.service.OnlineUserService;
-import com.ld.bmsys.auth.service.utils.JwtTokenUtil;
 import com.ld.bmsys.common.entity.Result;
+import com.ld.bmsys.common.utils.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -45,14 +45,14 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation("登陆")
-    public Result<Object> login(@RequestBody User user, HttpServletRequest request) {
+    public Result<Object> login(@RequestBody User user) {
         String username = user.getUsername();
         String password = user.getPassword();
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(upToken);
         SecurityContextHolder.getContext().setAuthentication(upToken);
         AuthUser authUser = (AuthUser) authentication.getPrincipal();
-        String token = securityProperties.getOnlineKey() + JwtTokenUtil.createToken(authUser);
+        String token = securityProperties.getOnlineKey() + JwtTokenUtil.createToken(username);
         Map<String, Object> authInfo = ImmutableMap.of("token", token, "user", authUser);
         return Result.data(authInfo, "登陆成功");
     }
@@ -64,6 +64,6 @@ public class LoginController {
         Map<String, Object> objectMap = JwtTokenUtil.parseJwtToken(token);
         redisTemplate.delete(token);
         redisTemplate.delete(MapUtil.getStr(objectMap, "username"));
-        return Result.data("注销成功");
+        return Result.success("注销成功");
     }
 }

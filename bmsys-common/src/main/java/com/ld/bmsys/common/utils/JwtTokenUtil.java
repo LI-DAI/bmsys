@@ -1,6 +1,5 @@
-package com.ld.bmsys.auth.service.utils;
+package com.ld.bmsys.common.utils;
 
-import com.ld.bmsys.auth.service.security.vo.AuthUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -25,8 +24,8 @@ public class JwtTokenUtil {
 
     private static final JwtParser PARSER = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build();
 
-    public static String createToken(AuthUser authUser) {
-        return createToken(authUser.getUsername(), "");
+    public static String createToken(String username) {
+        return createToken(username, "");
     }
 
     public static String createToken(String username, String authorities) {
