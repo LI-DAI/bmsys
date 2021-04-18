@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.ld.bmsys.auth.service.security.vo.AuthUser;
 import com.ld.bmsys.auth.service.security.vo.OnlineUser;
 import com.ld.bmsys.auth.service.service.OnlineUserService;
-import com.ld.bmsys.common.utils.CommonUtil;
+import com.ld.bmsys.auth.service.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +62,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
                 .userId(user.getUserId())
                 .username(user.getUsername())
                 .loginTime(LocalDateTime.now())
-                .ip(CommonUtil.getIp(request))
+                .ip(IpUtil.getIp(request))
                 .build();
         redisTemplate.opsForValue().set(token, JSON.toJSONString(onlineUser), expire, TimeUnit.HOURS);
     }

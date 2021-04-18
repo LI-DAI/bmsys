@@ -60,6 +60,13 @@ public class IpUtil {
         return ip;
     }
 
+    /**
+     * 从IP获取城市地址
+     *
+     * @param ip         IP
+     * @param localParse 是否本地解析
+     * @return
+     */
     public static String getCityInfo(String ip, boolean localParse) {
         if (localParse) {
             return getLocalCityInfo(ip);
