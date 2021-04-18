@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("all")
 public class RedisUtils {
 
-    private RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;

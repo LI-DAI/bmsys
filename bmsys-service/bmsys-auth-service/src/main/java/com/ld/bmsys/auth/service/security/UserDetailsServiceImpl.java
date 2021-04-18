@@ -1,5 +1,6 @@
 package com.ld.bmsys.auth.service.security;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -53,6 +54,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
+    @SuppressWarnings(value = "all")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userMapper.selectOne(Wrappers.<User>query().lambda().eq(User::getUsername, username));
         if (user == null) {
@@ -65,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             String authoritiesStr = redisTemplate.opsForValue().get(authoritiesCacheName);
             if (StrUtil.isNotBlank(authoritiesStr)) {
                 List<SimpleGrantedAuthority> grantedAuthorities = JSON.parseArray(authoritiesStr, SimpleGrantedAuthority.class);
-                if (grantedAuthorities != null && !grantedAuthorities.isEmpty()) {
+                if (CollectionUtil.isNotEmpty(grantedAuthorities)) {
                     authorities.addAll(grantedAuthorities);
                 }
             }

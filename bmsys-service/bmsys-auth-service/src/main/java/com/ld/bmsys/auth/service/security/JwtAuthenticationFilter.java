@@ -1,9 +1,7 @@
 package com.ld.bmsys.auth.service.security;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import com.ld.bmsys.common.utils.JwtTokenUtil;
@@ -62,13 +60,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String username = MapUtil.getStr(tokenMap, "username");
 
-            String authoritiesStr = redisTemplate.opsForValue().get(username);
-            List<SimpleGrantedAuthority> authorities = JSON.parseArray(authoritiesStr, SimpleGrantedAuthority.class);
-
-            if (CollectionUtil.isEmpty(authorities)) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                authorities = (List<SimpleGrantedAuthority>) userDetails.getAuthorities();
-            }
+            //从user中获取权限数据，没在token中存储权限，防止jwt过长
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>) userDetails.getAuthorities();
 
             UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(upToken);
