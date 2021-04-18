@@ -7,11 +7,9 @@ import com.ld.bmsys.auth.service.service.RoleService;
 import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ public class RoleController {
 
     @PostMapping("/insert")
     @ApiOperation("新增角色")
-    public Result<Boolean> addRole(Role role) {
+    public Result<Boolean> addRole(@RequestBody @Valid Role role) {
         return Result.data(roleService.save(role));
     }
 

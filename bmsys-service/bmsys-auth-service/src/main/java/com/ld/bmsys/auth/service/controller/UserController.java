@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation(value = "注册")
-    public Result<Boolean> register(@RequestBody User user) {
+    public Result<Boolean> register(@RequestBody @Valid User user) {
         return Result.data(userService.register(user));
     }
 

@@ -18,7 +18,6 @@ public class AuthUser implements UserDetails {
     @Getter
     private Integer userId;
 
-    @Getter
     private String username;
 
     @Getter

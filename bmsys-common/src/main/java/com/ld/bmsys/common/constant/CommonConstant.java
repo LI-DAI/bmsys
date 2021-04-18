@@ -22,6 +22,7 @@ public interface CommonConstant {
     String DICT_SERVICE_NAME = "bmsys-dict-service";
 
     String REGEX_EMAIL = "^\\s*?(.+)@(.+?)\\s*$";
+    String REGEX_PHONE = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
 
     String UTF_8 = "UTF-8";
     String AUTHENTICATION = "Token";

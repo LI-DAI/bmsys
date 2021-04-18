@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -25,9 +26,11 @@ public class Role implements Serializable {
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 
+    @NotBlank(message = "角色名不能为空")
     @ApiModelProperty(value = "角色名称(中文)")
     private String roleName;
 
+    @NotBlank(message = "角色KEY不能为空")
     @ApiModelProperty(value = "角色字符串")
     private String roleKey;
 

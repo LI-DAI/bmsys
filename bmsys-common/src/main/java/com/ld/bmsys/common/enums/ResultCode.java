@@ -3,9 +3,6 @@ package com.ld.bmsys.common.enums;
 import com.ld.bmsys.common.entity.IResultCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author ld
@@ -20,6 +17,8 @@ public enum ResultCode implements IResultCode {
 
     UN_AUTHENTICATION(-100, "未认证"),
     UN_AUTHORIZATION(-101, "未授权"),
+    BAD_CREDENTIALS(-102, "用户名或密码错误"),
+    LOCKED(-103, "账户已锁定"),
     EXPIRE_TOKEN(-200, "无效的Token");
 
     /**

@@ -7,8 +7,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+
+import static com.ld.bmsys.common.constant.CommonConstant.REGEX_PHONE;
 
 /**
  * @Author ld
@@ -25,21 +30,26 @@ public class User implements Serializable {
     @ApiModelProperty(value = "用户ID")
     private Integer userId;
 
+    @NotBlank(message = "username不能为空")
     @ApiModelProperty(value = "姓名")
     private String username;
 
+    @NotBlank(message = "昵称不能为空")
     @ApiModelProperty(value = "用户昵称")
     private String nickname;
 
+    @Email(message = "邮箱格式异常")
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
+    @Pattern(regexp = REGEX_PHONE, message = "手机号格式异常")
     @ApiModelProperty(value = "手机号码")
     private String phone;
 
     @ApiModelProperty(value = "用户性别 0男，1女 ")
     private String gender;
 
+    @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码")
     private String password;
 
