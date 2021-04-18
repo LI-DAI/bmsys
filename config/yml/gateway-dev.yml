@@ -1,0 +1,23 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: bmsys-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: bmsys-auth-service
+          uri: lb://bmsys-auth-service
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
+        - id: bmsys-dict-service
+          uri: lb://bmsys-dict-service
+          predicates:
+            - Path=/dict/**
+          filters:
+            - StripPrefix=1
+
+
