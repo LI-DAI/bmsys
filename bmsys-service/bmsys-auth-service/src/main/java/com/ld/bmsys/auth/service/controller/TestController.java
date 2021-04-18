@@ -1,11 +1,14 @@
 package com.ld.bmsys.auth.service.controller;
 
+import com.ld.bmsys.auth.service.utils.IpUtil;
 import com.ld.bmsys.common.entity.Result;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author ld
@@ -32,4 +35,18 @@ public class TestController {
     public Result<String> testRole() {
         return Result.data("this is test");
     }
+
+    @GetMapping("/ip")
+    public Result<String> testIp(HttpServletRequest request) {
+        String ip = IpUtil.getIp(request);
+
+//        ip = "112.86.218.124";
+
+        String cityInfo = IpUtil.getCityInfo(ip, true);
+
+        String httpCityInfo = IpUtil.getCityInfo(ip, false);
+
+        return Result.data("this is test");
+    }
+
 }

@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author lidai
- * @date 2018/11/2 16:21
+ * @author LD
+ * @date 2021/3/2 16:21
  */
 public class JwtTokenUtil {
 

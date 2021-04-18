@@ -1,7 +1,7 @@
 package com.ld.bmsys.common.constant;
 
 /**
- * @Author lidai
+ * @Author LD
  * @Date 2020/3/5 11:01
  */
 public interface CommonConstant {
@@ -29,6 +29,13 @@ public interface CommonConstant {
 
     String AUTHORITIES_CACHE_PREFIX = "authorities_";
 
+
+    /**
+     * 获取用户缓存key
+     *
+     * @param username 用户名或其他用户唯一字符串
+     * @return redis key
+     */
     static String getAuthoritiesCacheName(String username) {
         return AUTHORITIES_CACHE_PREFIX + username;
     }
