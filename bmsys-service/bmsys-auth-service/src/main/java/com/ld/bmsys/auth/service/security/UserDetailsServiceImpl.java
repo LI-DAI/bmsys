@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @SuppressWarnings(value = "all")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.selectOne(Wrappers.<User>query().lambda().eq(User::getUsername, username));
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
         if (user == null) {
             throw new UsernameNotFoundException("user not found");
         }
