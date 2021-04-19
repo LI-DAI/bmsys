@@ -65,6 +65,10 @@ public class Result<T> implements Serializable {
         return new Result<>(code, data, data == null ? CommonConstant.DEFAULT_NULL_MESSAGE : msg);
     }
 
+    public static <T> Result<T> fail() {
+        return new Result<>(ResultCode.FAILURE);
+    }
+
     public static <T> Result<T> fail(String msg) {
         return new Result<>(ResultCode.FAILURE, msg);
     }

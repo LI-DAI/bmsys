@@ -74,7 +74,7 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("收到来自客户端" + sid + "的信息:" + message);
-        //群发消息
+        //群发消息,会发送给自己
         for (WebSocketServer item : webSocketSet) {
             try {
                 item.sendMessage(message);
@@ -113,7 +113,7 @@ public class WebSocketServer {
      * @param sid     接收人
      * @throws IOException /
      */
-    public static void sendInfo(String message, @PathParam("sid") String sid) throws IOException {
+    public static void sendInfo(@PathParam("sid") String sid, String message) throws IOException {
         log.info("推送消息到客户端" + sid + "，推送内容:" + message);
         for (WebSocketServer item : webSocketSet) {
             try {
