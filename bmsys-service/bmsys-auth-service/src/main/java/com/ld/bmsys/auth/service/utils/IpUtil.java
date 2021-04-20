@@ -21,7 +21,6 @@ import java.net.UnknownHostException;
  * @Author LD
  * @Date 2021/4/18 16:40
  */
-@Component
 @Slf4j
 public class IpUtil {
 

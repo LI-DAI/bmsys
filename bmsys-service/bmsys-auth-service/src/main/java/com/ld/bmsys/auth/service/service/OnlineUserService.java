@@ -21,8 +21,8 @@ public interface OnlineUserService {
     /**
      * 保存登陆用户
      *
-     * @param user
-     * @param token
+     * @param user /
+     * @param token /
      */
     void saveOnlineUser(AuthUser user, String token, HttpServletRequest request);
 }

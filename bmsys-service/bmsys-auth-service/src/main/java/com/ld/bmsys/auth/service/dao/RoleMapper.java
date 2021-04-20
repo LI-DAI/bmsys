@@ -2,7 +2,6 @@ package com.ld.bmsys.auth.service.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ld.bmsys.auth.api.entity.Role;
-import com.ld.bmsys.auth.api.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -16,7 +15,8 @@ public interface RoleMapper extends BaseMapper<Role> {
     /**
      * 获取roles
      *
-     * @return
+     * @param userId /
+     * @return /
      */
     List<Role> getRolesByUserId(@Param("userId") Integer userId);
 }

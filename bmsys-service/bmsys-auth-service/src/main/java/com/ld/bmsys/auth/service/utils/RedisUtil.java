@@ -21,11 +21,11 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 @SuppressWarnings("all")
-public class RedisUtils {
+public class RedisUtil {
 
     private final RedisTemplate<Object, Object> redisTemplate;
 
-    public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisUtil(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

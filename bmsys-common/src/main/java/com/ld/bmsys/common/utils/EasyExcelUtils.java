@@ -17,7 +17,7 @@ public class EasyExcelUtils {
 
     public static <T> AnalysisEventListener<T> getListener(Consumer<List<T>> consumer, int size) {
         return new AnalysisEventListener<T>() {
-            List<T> dataList = new ArrayList<>();
+            final List<T> dataList = new ArrayList<>();
 
             @Override
             public void invoke(T data, AnalysisContext analysisContext) {
