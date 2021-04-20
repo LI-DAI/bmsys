@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import static com.ld.bmsys.common.constant.CommonConstant.AUTHENTICATION;
+import static com.ld.bmsys.common.constant.CommonConstant.getAuthoritiesCacheName;
 
 /**
  * @Author ld
@@ -61,9 +62,9 @@ public class LoginController {
     @ApiOperation("注销")
     public Result<Object> logout(HttpServletRequest request) {
         String token = request.getHeader(AUTHENTICATION);
-        Map<String, Object> objectMap = JwtTokenUtil.parseJwtToken(token);
-        redisTemplate.delete(token);
-        redisTemplate.delete(MapUtil.getStr(objectMap, "username"));
+        Map<String, Object> tokenMap = JwtTokenUtil.parseJwtToken(token);
+        String username = MapUtil.getStr(tokenMap, "username");
+        redisTemplate.delete(getAuthoritiesCacheName(username));
         return Result.success("注销成功");
     }
 }
