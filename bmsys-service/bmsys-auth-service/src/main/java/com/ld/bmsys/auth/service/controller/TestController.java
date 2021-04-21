@@ -2,9 +2,12 @@ package com.ld.bmsys.auth.service.controller;
 
 import com.ld.bmsys.auth.service.utils.IpUtil;
 import com.ld.bmsys.common.entity.Result;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +50,21 @@ public class TestController {
         String httpCityInfo = IpUtil.getCityInfo(ip, false);
 
         return Result.data("this is test");
+    }
+
+
+    @PostMapping("/test1")
+    @ApiOperation(value = "测试2")
+    @Cacheable(cacheNames = "userManage")
+    public Result<String> test(String name, Integer age) {
+        return Result.data("hello user" + name + age);
+    }
+
+    @PostMapping("/test2")
+    @ApiOperation(value = "测试1")
+    @Cacheable(cacheNames = "Test")
+    public Result<String> test(String test) {
+        return Result.data("hello user" + test);
     }
 
 }

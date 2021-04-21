@@ -4,6 +4,7 @@ import com.ld.bmsys.common.constant.CommonConstant;
 import com.ld.bmsys.common.enums.ResultCode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @Date 2020/3/5 10:56
  */
 @Data
+@ToString
 @NoArgsConstructor
 public class Result<T> implements Serializable {
 

@@ -1,10 +1,9 @@
 package com.ld.bmsys.auth.service.security.vo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -12,10 +11,8 @@ import java.time.LocalDateTime;
  * @Date 2020/4/18 16:26
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class OnlineUser {
+@Accessors(chain = true)
+public class OnlineUser implements Serializable {
 
     private Integer userId;
 
@@ -24,4 +21,14 @@ public class OnlineUser {
     private String ip;
 
     private LocalDateTime loginTime;
+
+    public OnlineUser() {
+    }
+
+    public OnlineUser(Integer userId, String username, String ip, LocalDateTime loginTime) {
+        this.userId = userId;
+        this.username = username;
+        this.ip = ip;
+        this.loginTime = loginTime;
+    }
 }

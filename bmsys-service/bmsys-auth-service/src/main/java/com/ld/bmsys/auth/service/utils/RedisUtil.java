@@ -23,9 +23,9 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("all")
 public class RedisUtil {
 
-    private final RedisTemplate<Object, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    public RedisUtil(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisUtil(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -72,7 +72,7 @@ public class RedisUtil {
      * @param key 键 不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
-    public long getExpire(Object key) {
+    public long getExpire(String key) {
         return redisTemplate.getExpire(key, TimeUnit.SECONDS);
     }
 
@@ -165,7 +165,7 @@ public class RedisUtil {
                 log.debug(new StringBuilder("删除缓存：").append(keys[0]).append("，结果：").append(result).toString());
                 log.debug("--------------------------------------------");
             } else {
-                Set<Object> keySet = new HashSet<>();
+                Set<String> keySet = new HashSet<>();
                 for (String key : keys) {
                     keySet.addAll(redisTemplate.keys(key));
                 }
@@ -680,7 +680,7 @@ public class RedisUtil {
      * @param ids    id
      */
     public void delByKeys(String prefix, Set<Long> ids) {
-        Set<Object> keys = new HashSet<>();
+        Set<String> keys = new HashSet<>();
         for (Long id : ids) {
             keys.addAll(redisTemplate.keys(new StringBuffer(prefix).append(id).toString()));
         }

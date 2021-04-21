@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 import java.time.ZoneId;
@@ -37,7 +38,7 @@ public class JacksonObjectMapperBuilder implements Supplier<ObjectMapper> {
 
     protected void registerModule(ObjectMapper mapper) {
         mapper.registerModule(new ParameterNamesModule());
-//        mapper.registerModule(new AfterburnerModule());
+        mapper.registerModule(new AfterburnerModule());
         mapper.registerModule(new JavaTimeModule().addSerializer(ZonedDateTime.class, new ZoneIdZonedDateTimeSerializer(withZone)));
     }
 

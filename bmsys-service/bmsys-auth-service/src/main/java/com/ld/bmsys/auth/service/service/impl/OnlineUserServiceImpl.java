@@ -58,12 +58,7 @@ public class OnlineUserServiceImpl implements OnlineUserService {
 
     @Override
     public void saveOnlineUser(AuthUser user, String token, HttpServletRequest request) {
-        OnlineUser onlineUser = OnlineUser.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .loginTime(LocalDateTime.now())
-                .ip(IpUtil.getIp(request))
-                .build();
+        OnlineUser onlineUser = new OnlineUser(user.getUserId(), user.getUsername(), IpUtil.getIp(request), LocalDateTime.now());
         redisTemplate.opsForValue().set(token, JSON.toJSONString(onlineUser), expire, TimeUnit.HOURS);
     }
 }

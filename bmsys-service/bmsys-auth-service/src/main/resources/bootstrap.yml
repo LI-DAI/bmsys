@@ -12,6 +12,21 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+  cache:
+    type: redis
+  redis:
+    database: 0
+    host: localhost
+    password:
+    port: 6379
+    timeout: 1000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/*.xml

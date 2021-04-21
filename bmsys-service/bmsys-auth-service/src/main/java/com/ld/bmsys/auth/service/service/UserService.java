@@ -3,10 +3,7 @@ package com.ld.bmsys.auth.service.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ld.bmsys.auth.api.entity.User;
-import com.ld.bmsys.auth.api.entity.UserRole;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
-
-import java.util.List;
 
 /**
  * @Author ld
@@ -29,6 +26,13 @@ public interface UserService extends IService<User> {
      * @return
      */
     boolean register(User user);
+
+    /**
+     * 修改用户信息
+     *
+     * @param user 信息
+     */
+    void updateUser(User user);
 
     /**
      * 获取用户列表

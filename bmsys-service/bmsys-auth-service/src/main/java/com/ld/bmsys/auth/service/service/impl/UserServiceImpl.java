@@ -9,10 +9,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
 import com.ld.bmsys.auth.service.dao.UserMapper;
-import com.ld.bmsys.auth.service.dao.UserRoleMapper;
 import com.ld.bmsys.auth.service.service.UserService;
 import com.ld.bmsys.common.exception.BadRequestException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
+@CacheConfig(cacheNames = "userInfo")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     private final UserMapper userMapper;
@@ -35,6 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @Cacheable(key = "#p0")
     public User findUserByUsername(String username) {
         Wrapper<User> wrapper = Wrappers.<User>query().lambda().eq(User::getUsername, username);
         return userMapper.selectOne(wrapper);
@@ -50,17 +54,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.save(user);
     }
 
+    @CacheEvict(key = "p0.username")
+    @Override
+    public void updateUser(User user) {
+        this.saveOrUpdate(user);
+    }
+
+
     @Override
     public Page<User> getUserList(SearchConditionVO search) {
         Page<User> page = new Page<>(search.getPageNum(), search.getPageSize());
-        LambdaQueryWrapper<User> query = Wrappers.<User>query().lambda();
-        if (StrUtil.isNotBlank(search.getUsername())) {
-            query.like(User::getUsername, search.getUsername());
-        }
-        if (StrUtil.isNotBlank(search.getPhone())) {
-            query.eq(User::getPhone, search.getPhone());
-        }
-        return userMapper.selectPage(page, query);
+        LambdaQueryWrapper<User> lambdaQueryWrapper = Wrappers.<User>lambdaQuery()
+                .and(StrUtil.isNotBlank(search.getUsername()), query -> query.like(User::getUsername, search.getUsername()))
+                .and(StrUtil.isNotBlank(search.getUsername()), query -> query.eq(User::getPhone, search.getPhone()));
+        return userMapper.selectPage(page, lambdaQueryWrapper);
     }
 
 }

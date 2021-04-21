@@ -3,14 +3,13 @@ package com.ld.bmsys.auth.service.security;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ld.bmsys.auth.api.entity.Menu;
 import com.ld.bmsys.auth.api.entity.Role;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.service.dao.MenuMapper;
 import com.ld.bmsys.auth.service.dao.RoleMapper;
-import com.ld.bmsys.auth.service.dao.UserMapper;
 import com.ld.bmsys.auth.service.security.vo.AuthUser;
+import com.ld.bmsys.auth.service.service.UserService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -35,8 +34,6 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserMapper userMapper;
-
     private final RoleMapper roleMapper;
 
     private final MenuMapper menuMapper;
@@ -45,18 +42,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final SecurityProperties properties;
 
-    public UserDetailsServiceImpl(UserMapper userMapper, RoleMapper roleMapper, MenuMapper menuMapper, StringRedisTemplate redisTemplate, SecurityProperties properties) {
-        this.userMapper = userMapper;
+    private final UserService userService;
+
+    public UserDetailsServiceImpl(RoleMapper roleMapper, MenuMapper menuMapper, StringRedisTemplate redisTemplate, SecurityProperties properties, UserService userService) {
         this.roleMapper = roleMapper;
         this.menuMapper = menuMapper;
         this.redisTemplate = redisTemplate;
         this.properties = properties;
+        this.userService = userService;
     }
 
     @Override
     @SuppressWarnings(value = "all")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, username));
+        User user = userService.findUserByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("user not found");
         }

@@ -9,11 +9,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -32,17 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SecurityProperties properties;
     private final StringRedisTemplate redisTemplate;
+    private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(StringRedisTemplate redisTemplate, SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl) {
+    public SecurityConfig(StringRedisTemplate redisTemplate, SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
         this.redisTemplate = redisTemplate;
         this.properties = properties;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsServiceImpl)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
     @Bean
@@ -84,11 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        web.ignoring().antMatchers(anonymousAccess()).antMatchers(HttpMethod.OPTIONS, "/**");
 //    }
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     public String[] anonymousAccess() {
         List<String> anonList = properties.getAnonUri();
