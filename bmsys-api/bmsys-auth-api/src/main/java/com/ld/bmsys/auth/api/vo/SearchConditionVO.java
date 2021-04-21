@@ -13,10 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchConditionVO {
 
-    private Long pageSize;
-
-    private Long pageNum;
-
     private String keyword;
 
     private Integer status;

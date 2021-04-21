@@ -10,8 +10,6 @@ import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,10 +41,18 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation(value = "注册")
-    @CacheEvict(cacheNames = "user", key = "'userList'", allEntries = true)
     public Result<Boolean> register(@RequestBody @Valid User user) {
         return Result.data(userService.register(user));
     }
+
+
+    @PostMapping("/update")
+    @ApiOperation("修改用户信息")
+    public Result<Boolean> updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return Result.success();
+    }
+
 
     @PostMapping("/add/user_role")
     @ApiOperation("新增UserRole")
@@ -54,11 +60,14 @@ public class UserController {
         return Result.data(userRoleService.saveBatch(userRoles));
     }
 
+
     @PostMapping("/list")
     @ApiOperation("获取用户列表")
-    @Cacheable(cacheNames = "user", key = "'userList' + #searchConditionVO")
-    public Result<Page<User>> getUserList(@RequestBody SearchConditionVO searchConditionVO) {
-        return Result.data(userService.getUserList(searchConditionVO));
+    public Result<Page<User>> getUserList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
+                                          @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                          @RequestBody SearchConditionVO searchConditionVO) {
+        Page<User> page = new Page<>(pageNum, pageSize);
+        return Result.data(userService.getUserList(searchConditionVO, page));
     }
 
 }

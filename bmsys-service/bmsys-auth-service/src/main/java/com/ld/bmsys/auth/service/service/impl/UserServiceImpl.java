@@ -38,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    @Cacheable(key = "#p0")
+    @Cacheable(key = "#username")
     public User findUserByUsername(String username) {
         Wrapper<User> wrapper = Wrappers.<User>query().lambda().eq(User::getUsername, username);
         return userMapper.selectOne(wrapper);
@@ -54,19 +54,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return this.save(user);
     }
 
-    @CacheEvict(key = "p0.username")
+    @CacheEvict(key = "#p0.username")
     @Override
-    public void updateUser(User user) {
-        this.saveOrUpdate(user);
+    public User updateUser(User user) {
+        userMapper.updateById(user);
+        return user;
     }
 
 
     @Override
-    public Page<User> getUserList(SearchConditionVO search) {
-        Page<User> page = new Page<>(search.getPageNum(), search.getPageSize());
+    public Page<User> getUserList(SearchConditionVO search, Page page) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = Wrappers.<User>lambdaQuery()
                 .and(StrUtil.isNotBlank(search.getUsername()), query -> query.like(User::getUsername, search.getUsername()))
-                .and(StrUtil.isNotBlank(search.getUsername()), query -> query.eq(User::getPhone, search.getPhone()));
+                .and(StrUtil.isNotBlank(search.getPhone()), query -> query.eq(User::getPhone, search.getPhone()));
         return userMapper.selectPage(page, lambdaQueryWrapper);
     }
 

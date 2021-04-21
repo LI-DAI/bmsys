@@ -32,7 +32,7 @@ public interface UserService extends IService<User> {
      *
      * @param user 信息
      */
-    void updateUser(User user);
+    User updateUser(User user);
 
     /**
      * 获取用户列表
@@ -40,5 +40,5 @@ public interface UserService extends IService<User> {
      * @param searchConditionVO 搜索条件
      * @return
      */
-    Page<User> getUserList(SearchConditionVO searchConditionVO);
+    Page<User> getUserList(SearchConditionVO searchConditionVO, Page page);
 }
