@@ -55,4 +55,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         this.save(role);
         return false;
     }
+
+    @Override
+    public boolean clearCache() {
+        return false;
+    }
 }

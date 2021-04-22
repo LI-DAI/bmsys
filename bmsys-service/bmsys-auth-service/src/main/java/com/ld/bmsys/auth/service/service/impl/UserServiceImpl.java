@@ -57,6 +57,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @CacheEvict(key = "#p0.username")
     @Override
     public User updateUser(User user) {
+        Integer count = userMapper.selectCount(Wrappers.<User>lambdaQuery()
+                .eq(User::getUsername, user.getUsername())
+                .ne(User::getUserId, user.getUserId()));
+        if (count > 0) {
+            throw new BadRequestException("用户名已存在");
+        }
         userMapper.updateById(user);
         return user;
     }

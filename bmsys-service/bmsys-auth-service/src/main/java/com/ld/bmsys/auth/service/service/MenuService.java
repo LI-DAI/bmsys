@@ -17,4 +17,12 @@ public interface MenuService extends IService<Menu> {
      * @return
      */
     List<Menu> loadAllMenus();
+
+    /**
+     * 获取用户权限
+     *
+     * @param userId 用户唯一ID
+     * @return
+     */
+    List<Menu> getMenusByUserId(Integer userId);
 }

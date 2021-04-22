@@ -27,4 +27,11 @@ public interface RoleService extends IService<Role> {
      */
     boolean addRole(Role role);
 
+    /**
+     * 清空缓存
+     *
+     * @return
+     */
+    boolean clearCache();
+
 }

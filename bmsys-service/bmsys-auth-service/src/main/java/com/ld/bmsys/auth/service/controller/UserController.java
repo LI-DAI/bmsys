@@ -9,7 +9,6 @@ import com.ld.bmsys.auth.service.service.UserService;
 import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,7 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Api(tags = "用户管理")
-@CacheConfig(cacheNames = "user")
 public class UserController {
 
     private final UserService userService;
