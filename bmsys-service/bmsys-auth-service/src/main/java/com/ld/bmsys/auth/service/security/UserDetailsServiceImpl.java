@@ -10,6 +10,8 @@ import com.ld.bmsys.auth.service.dao.MenuMapper;
 import com.ld.bmsys.auth.service.dao.RoleMapper;
 import com.ld.bmsys.auth.service.security.vo.AuthUser;
 import com.ld.bmsys.auth.service.service.UserService;
+import com.ld.bmsys.auth.service.utils.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;

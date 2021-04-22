@@ -1,7 +1,6 @@
 package com.ld.bmsys.auth.service.test;
 
 import cn.hutool.core.convert.Convert;
-import com.ld.bmsys.auth.api.entity.Menu;
 import com.ld.bmsys.auth.service.security.vo.OnlineUser;
 import com.ld.bmsys.auth.service.utils.RedisUtil;
 import com.ld.bmsys.auth.service.utils.SpringContextUtil;
@@ -9,12 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author ld
@@ -42,22 +43,29 @@ public class Test1 {
 
     @Test
     public void test2() {
-        OnlineUser xiaoming = new OnlineUser(1, "xiaoming", "1.1.1.1", LocalDateTime.now());
-        OnlineUser xiaoli = new OnlineUser(1, "小李", "1.1.1.2", LocalDateTime.now());
+        OnlineUser xiaoming = new OnlineUser(1, "xiaoming", "1.1.1.1", null);
+        OnlineUser xiaoli = new OnlineUser(1, "小李", "1.1.1.2", null);
         ArrayList<OnlineUser> users = new ArrayList<>();
         users.add(xiaoli);
         users.add(xiaoming);
         redisUtil.set("users", users);
-        List<OnlineUser> users1 = (List<OnlineUser>) redisUtil.get("users");
+        List<OnlineUser> users1 = Convert.toList(OnlineUser.class, redisUtil.get("users"));
         System.out.println(users1);
     }
 
     @Test
     public void test3() {
-        Object o = redisUtil.get("Menu::all");
+        Map<String, Object> map = new HashMap<>();
+        map.put("test", "fsrewqre");
+        map.put("age", 20);
+        redisUtil.set("map", map);
+        Object o = redisUtil.get("test");
         System.out.println(o.toString());
-        List<Menu> objects = Convert.toList(Menu.class, o);
+        List<SimpleGrantedAuthority> objects = Convert.toList(SimpleGrantedAuthority.class, o);
         System.out.println(objects);
     }
+
+
+
 
 }

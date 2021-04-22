@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @Date 2021/4/21 14:54
  */
 @Configuration
-public class OthersConfig {
+public class WebConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -9,3 +9,15 @@ spring:
         server-addr: 127.0.0.1:8848
         prefix: dict
         file-extension: yml
+  redis:
+    database: 0
+    host: localhost
+    password:
+    port: 6379
+    timeout: 1000ms
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#        max-wait: -1ms

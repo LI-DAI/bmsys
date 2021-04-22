@@ -29,11 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SecurityProperties properties;
-    private final StringRedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
 
-    public SecurityConfig(StringRedisTemplate redisTemplate, SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
-        this.redisTemplate = redisTemplate;
+    public SecurityConfig(SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
         this.properties = properties;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
@@ -54,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .addFilterBefore(new JwtAuthenticationFilter(userDetailsServiceImpl, properties, redisTemplate), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(userDetailsServiceImpl, properties), UsernamePasswordAuthenticationFilter.class)
                 //禁用csrf,
                 .csrf().disable()
                 //关闭session
