@@ -1,6 +1,7 @@
 package com.ld.bmsys.auth.service.test;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.convert.Convert;
+import com.ld.bmsys.auth.api.entity.Menu;
 import com.ld.bmsys.auth.service.security.vo.OnlineUser;
 import com.ld.bmsys.auth.service.utils.RedisUtil;
 import com.ld.bmsys.auth.service.utils.SpringContextUtil;
@@ -47,11 +48,16 @@ public class Test1 {
         users.add(xiaoli);
         users.add(xiaoming);
         redisUtil.set("users", users);
-
-
         List<OnlineUser> users1 = (List<OnlineUser>) redisUtil.get("users");
         System.out.println(users1);
     }
 
+    @Test
+    public void test3() {
+        Object o = redisUtil.get("Menu::all");
+        System.out.println(o.toString());
+        List<Menu> objects = Convert.toList(Menu.class, o);
+        System.out.println(objects);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.ld.bmsys.auth.service.security;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ld.bmsys.common.entity.Result;
@@ -35,17 +36,14 @@ import static com.ld.bmsys.common.utils.CommonUtil.print;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final SecurityProperties properties;
-    private final StringRedisTemplate redisTemplate;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(UserDetailsService userDetailsService, SecurityProperties properties, StringRedisTemplate redisTemplate) {
+    public JwtAuthenticationFilter(UserDetailsService userDetailsService, SecurityProperties properties) {
         this.userDetailsService = userDetailsService;
         this.properties = properties;
-        this.redisTemplate = redisTemplate;
     }
 
     @Override
-    @SuppressWarnings(value = "unchecked")
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = resolveToken(request);
         if (!pathMatcher(request) && StrUtil.isNotBlank(token)) {
@@ -53,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 tokenMap = JwtTokenUtil.parseJwtToken(token);
             } catch (Exception e) {
-                log.error("Parsing Token Exception：", e.getMessage());
+                log.error("Parsing Token Exception：{}", e.getMessage());
                 print(Result.fail(ResultCode.EXPIRE_TOKEN), response);
                 return;
             }
@@ -62,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             //从user中获取权限数据，没在token中存储权限，防止jwt过长
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            List<SimpleGrantedAuthority> authorities = (List<SimpleGrantedAuthority>) userDetails.getAuthorities();
+            List<SimpleGrantedAuthority> authorities = Convert.toList(SimpleGrantedAuthority.class, userDetails.getAuthorities());
 
             UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(upToken);
