@@ -1,4 +1,4 @@
-package com.ld.bmsys.auth.service.security;
+package com.ld.bmsys.auth.service.security.anon;
 
 import java.lang.annotation.*;
 

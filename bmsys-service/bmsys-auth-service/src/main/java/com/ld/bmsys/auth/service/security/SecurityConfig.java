@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.Set;
 
-import static com.ld.bmsys.auth.service.security.AnonymousAccessProcess.anonymousCache;
+import static com.ld.bmsys.auth.service.security.anon.AnonymousAccessProcess.anonymousCache;
 import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 import static com.ld.bmsys.common.utils.CommonUtil.print;
 

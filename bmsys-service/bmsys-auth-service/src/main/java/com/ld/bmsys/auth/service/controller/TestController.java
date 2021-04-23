@@ -1,6 +1,6 @@
 package com.ld.bmsys.auth.service.controller;
 
-import com.ld.bmsys.auth.service.security.AnonymousAccess;
+import com.ld.bmsys.auth.service.security.anon.AnonymousAccess;
 import com.ld.bmsys.auth.service.utils.IpUtil;
 import com.ld.bmsys.common.entity.Result;
 import io.swagger.annotations.Api;
