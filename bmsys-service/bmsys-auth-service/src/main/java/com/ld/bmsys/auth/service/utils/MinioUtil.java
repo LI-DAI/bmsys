@@ -152,7 +152,12 @@ public class MinioUtil {
      * @throws Exception
      */
     public static ObjectWriteResponse uploadObjectWithContentType(String bucketName, String objectName, InputStream ins, String contentType) throws Exception {
-        Objects.requireNonNull(contentType);
+        Assert.notNull(contentType, "contentType can't be null");
+        Assert.notNull(contentType, "bucketName can't be null");
+
+        if (!bucketExists(bucketName)) {
+            createBucket(bucketName);
+        }
         return minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucketName)
