@@ -48,4 +48,9 @@ public class MinioProperties {
      */
     private String configDir;
 
+    /**
+     * 是否启用
+     */
+    private Boolean enable;
+
 }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -48,5 +49,14 @@ public class SpringContextUtil implements ApplicationContextAware {
             log.warn(e.getMessage());
         }
         return result;
+    }
+
+    /**
+     * 发布事件
+     *
+     * @param applicationEvent 事件
+     */
+    public static void publishEvent(ApplicationEvent applicationEvent) {
+        applicationContext.publishEvent(applicationEvent);
     }
 }

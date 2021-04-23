@@ -41,6 +41,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 minio:
+  enable: false
   endpoint: http://192.168.97.229
   port: 9090
   bucket-name: test
