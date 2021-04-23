@@ -1,6 +1,7 @@
 package com.ld.bmsys.auth.service.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ld.bmsys.auth.service.config.MinioProperties;
 import io.minio.*;
@@ -9,9 +10,13 @@ import io.minio.messages.Bucket;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +29,7 @@ import java.util.stream.Collectors;
  * @Author LD
  * @Date 2021/4/22 16:30
  */
+@Slf4j
 @Component
 @SuppressWarnings("all")
 public class MinioUtil {
@@ -134,6 +140,7 @@ public class MinioUtil {
         return getObjectUrl(bucketName, objectName);
     }
 
+
     /**
      * 上传对象,带contentType
      *
@@ -153,6 +160,18 @@ public class MinioUtil {
                         .contentType(contentType)
                         .stream(ins, ins.available(), -1)
                         .build());
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param objectName 文件名
+     * @param file       文件
+     * @return 文件url地址
+     */
+    public static String uploadAndGetFileUrlWithObjectName(String objectName, MultipartFile file) throws Exception {
+        final InputStream ins = file.getInputStream();
+        return uploadAndGetObjectUrl(DEFAULT_BUCKET_NAME, objectName, ins);
     }
 
     /**
@@ -179,6 +198,20 @@ public class MinioUtil {
         return uploadAndGetFileUrl(DEFAULT_BUCKET_NAME, file);
     }
 
+    /**
+     * 文件上传
+     *
+     * @param bucketName 桶名
+     * @param objectName 文件名
+     * @param file       文件
+     * @return
+     * @throws Exception
+     */
+    public static String uploadAndGetFileUrl(String bucketName, String objectName, File file) throws Exception {
+        Assert.isTrue(FileUtil.isEmpty(file), "当前文件为空");
+
+        return uploadAndGetObjectUrl(bucketName, objectName, new FileInputStream(file));
+    }
 
     /**
      * 对象上传 正常上传,不加密
@@ -240,20 +273,6 @@ public class MinioUtil {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
     }
 
-    /**
-     * 批量移除
-     *
-     * @param bucketName  桶名
-     * @param objectNames 对象名集合
-     */
-    public static void removeObjects(String bucketName, List<String> objectNames) {
-        if (CollectionUtil.isNotEmpty(objectNames)) {
-            List<DeleteObject> objects = objectNames.stream().map(DeleteObject::new).collect(Collectors.toList());
-            Iterable<Result<DeleteError>> results = minioClient.removeObjects(
-                    RemoveObjectsArgs.builder().bucket(bucketName).objects(objects).build());
-
-        }
-    }
 
     /**
      * 移除桶内所有对象
@@ -268,6 +287,27 @@ public class MinioUtil {
 
         removeObjects(bucketName, buketObjects);
     }
+
+    /**
+     * 批量移除
+     *
+     * @param bucketName  桶名
+     * @param objectNames 对象名集合
+     */
+    public static void removeObjects(String bucketName, List<String> objectNames) throws Exception {
+        if (CollectionUtil.isNotEmpty(objectNames)) {
+            List<DeleteObject> objects = objectNames.stream().map(DeleteObject::new).collect(Collectors.toList());
+            Iterable<Result<DeleteError>> results = minioClient.removeObjects(
+                    RemoveObjectsArgs.builder().bucket(bucketName).objects(objects).build());
+
+            for (Result<DeleteError> result : results) {
+                DeleteError error = result.get();
+                log.error("Error in deleting object -> {};  error message -> {};", error.objectName(), error.message());
+            }
+
+        }
+    }
+
 
     /**
      * 获取桶下所有objects
