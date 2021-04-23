@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Author ld
@@ -55,14 +57,16 @@ public class Test1 {
 
     @Test
     public void test3() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("test", "fsrewqre");
-        map.put("age", 20);
-        redisUtil.set("map", map);
-        Object o = redisUtil.get("test");
-        System.out.println(o.toString());
-        List<SimpleGrantedAuthority> objects = Convert.toList(SimpleGrantedAuthority.class, o);
-        System.out.println(objects);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("test", "fsrewqre");
+//        map.put("age", 20);
+//        redisUtil.set("map", map);
+//        Object o = redisUtil.get("test");
+//        System.out.println(o.toString());
+//        List<SimpleGrantedAuthority> objects = Convert.toList(SimpleGrantedAuthority.class, o);
+//        System.out.println(objects);
+        List<String> lidai = Stream.of(null, "lidai").collect(Collectors.toList());
+        System.out.println(lidai);
     }
 
 

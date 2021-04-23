@@ -38,6 +38,7 @@ public class TestController {
 
     @GetMapping("/role")
     @Secured(value = "ROLE_COMMON")
+    @AnonymousAccess
     public Result<String> testRole() {
         return Result.data("this is test");
     }
