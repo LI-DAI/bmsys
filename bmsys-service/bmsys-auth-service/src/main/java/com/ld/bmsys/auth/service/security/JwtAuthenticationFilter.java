@@ -7,7 +7,6 @@ import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import com.ld.bmsys.common.utils.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import static com.ld.bmsys.auth.service.security.AnonymousAccessProcess.anonymousCache;
+import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 import static com.ld.bmsys.common.constant.CommonConstant.AUTHENTICATION;
 import static com.ld.bmsys.common.utils.CommonUtil.print;
 
@@ -79,7 +81,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     public boolean pathMatcher(HttpServletRequest request) {
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
-        for (String path : properties.getAnonUri()) {
+        Set<String> cacheUri = anonymousCache.get(ANON_CACHE_KEY);
+        for (String path : cacheUri) {
             if (pathMatcher.match(path, request.getRequestURI())) {
                 return true;
             }

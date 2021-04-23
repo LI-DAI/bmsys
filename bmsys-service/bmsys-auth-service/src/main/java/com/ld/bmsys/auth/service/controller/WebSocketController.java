@@ -2,6 +2,7 @@ package com.ld.bmsys.auth.service.controller;
 
 import com.ld.bmsys.auth.service.websocket.WebSocketServer;
 import com.ld.bmsys.common.entity.Result;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/webSocket")
+@Api(tags = "socket demo")
 public class WebSocketController {
 
     @PostMapping("/push")

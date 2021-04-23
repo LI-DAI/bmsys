@@ -29,6 +29,8 @@ public interface CommonConstant {
 
     String AUTHORITIES_CACHE_PREFIX = "authorities_";
 
+    String ANON_CACHE_KEY = "anonymousUrl";
+
 
     /**
      * 获取用户缓存key

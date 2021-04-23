@@ -1,9 +1,9 @@
 package com.ld.bmsys.auth.service.security;
 
+import cn.hutool.core.convert.Convert;
 import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,8 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.List;
+import java.util.Set;
 
+import static com.ld.bmsys.auth.service.security.AnonymousAccessProcess.anonymousCache;
+import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 import static com.ld.bmsys.common.utils.CommonUtil.print;
 
 /**
@@ -84,8 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     public String[] anonymousAccess() {
-        List<String> anonList = properties.getAnonUri();
-        return anonList.toArray(new String[0]);
+        Set<String> cacheUri = anonymousCache.get(ANON_CACHE_KEY);
+        return Convert.toStrArray(cacheUri);
     }
 
 }

@@ -1,7 +1,9 @@
 package com.ld.bmsys.auth.service.controller;
 
+import com.ld.bmsys.auth.service.security.AnonymousAccess;
 import com.ld.bmsys.auth.service.utils.IpUtil;
 import com.ld.bmsys.common.entity.Result;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.annotation.Secured;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/auth/test")
+@Api(tags = "测试")
 public class TestController {
 
     @GetMapping("/noCheck")
@@ -40,6 +43,7 @@ public class TestController {
     }
 
     @GetMapping("/ip")
+    @AnonymousAccess
     public Result<String> testIp(HttpServletRequest request) {
         String ip = IpUtil.getIp(request);
 

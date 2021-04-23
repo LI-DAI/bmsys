@@ -4,8 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author ld
@@ -22,5 +22,5 @@ public class SecurityProperties {
 
     private String onlineKey;
 
-    private List<String> anonUri = new ArrayList<>(20);
+    private Set<String> anonUri = new HashSet<>(20);
 }
