@@ -1,15 +1,22 @@
 package com.ld.bmsys.auth.service.utils;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ld.bmsys.auth.service.config.MinioProperties;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
+import io.minio.messages.DeleteError;
+import io.minio.messages.DeleteObject;
+import io.minio.messages.Item;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -31,7 +38,7 @@ public class MinioUtil {
         init();
     }
 
-    public void init() throws Exception {
+    private void init() throws Exception {
 
         MinioUtil.minioClient = MinioClient.builder()
                 .endpoint(properties.getEndpoint(), properties.getPort(), properties.getSecure())
@@ -46,7 +53,7 @@ public class MinioUtil {
     /**
      * 判断 bucket是否存在
      *
-     * @param bucketName: 桶名
+     * @param bucketName 桶名
      * @return: boolean
      */
     public static boolean bucketExists(String bucketName) throws Exception {
@@ -87,6 +94,66 @@ public class MinioUtil {
         return buckets.stream().map(Bucket::name).collect(Collectors.toList());
     }
 
+    /**
+     * 上传文件,带contentType
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    public static String uploadFileWithContentType(MultipartFile file) throws Exception {
+        return uploadFileWithContentType(DEFAULT_BUCKET_NAME, file.getOriginalFilename(), file, null);
+    }
+
+    /**
+     * 上传文件,带contentType
+     *
+     * @param objectName 对象名
+     * @param file       文件
+     * @return
+     * @throws Exception
+     */
+    public static String uploadFileWithContentType(String objectName, MultipartFile file) throws Exception {
+        return uploadFileWithContentType(DEFAULT_BUCKET_NAME, objectName, file, null);
+    }
+
+    /**
+     * 上传文件,带contentType
+     *
+     * @param bucketName  桶名
+     * @param objectName  文件名
+     * @param ins         文件流
+     * @param contentType /
+     * @return
+     * @throws Exception
+     */
+    public static String uploadFileWithContentType(String bucketName, String objectName, MultipartFile file, String contentType) throws Exception {
+        contentType = StrUtil.isBlank(contentType) ? file.getContentType() : contentType;
+        InputStream inputStream = file.getInputStream();
+        uploadObjectWithContentType(bucketName, objectName, inputStream, contentType);
+        return getObjectUrl(bucketName, objectName);
+    }
+
+    /**
+     * 上传对象,带contentType
+     *
+     * @param bucketName  桶名
+     * @param fileName    文件名
+     * @param ins         文件流
+     * @param contentType /
+     * @return
+     * @throws Exception
+     */
+    public static ObjectWriteResponse uploadObjectWithContentType(String bucketName, String objectName, InputStream ins, String contentType) throws Exception {
+        Objects.requireNonNull(contentType);
+        return minioClient.putObject(
+                PutObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .contentType(contentType)
+                        .stream(ins, ins.available(), -1)
+                        .build());
+    }
 
     /**
      * 文件上传
@@ -95,10 +162,10 @@ public class MinioUtil {
      * @param file       文件
      * @return 文件url地址
      */
-    public static String upload(String bucketName, MultipartFile file) throws Exception {
+    public static String uploadAndGetFileUrl(String bucketName, MultipartFile file) throws Exception {
         final InputStream ins = file.getInputStream();
         final String fileName = file.getOriginalFilename();
-        return upload(bucketName, fileName, ins);
+        return uploadAndGetObjectUrl(bucketName, fileName, ins);
     }
 
     /**
@@ -108,31 +175,60 @@ public class MinioUtil {
      * @return 文件url地址
      * @throws Exception
      */
-    public static String upload(MultipartFile file) throws Exception {
-        final InputStream ins = file.getInputStream();
-        final String fileName = file.getOriginalFilename();
-        return upload(DEFAULT_BUCKET_NAME, fileName, ins);
+    public static String uploadAndGetFileUrl(MultipartFile file) throws Exception {
+        return uploadAndGetFileUrl(DEFAULT_BUCKET_NAME, file);
     }
 
 
     /**
-     * 文件上传 正常上传,不加密
+     * 对象上传 正常上传,不加密
      *
      * @param bucketName  桶名
      * @param fileName    文件名
      * @param inputStream 文件流
      * @return 文件地址
      */
-    public static String upload(String bucketName, String fileName, InputStream inputStream) throws Exception {
-        minioClient.putObject(
-                PutObjectArgs.builder()
-                        .bucket(bucketName)
-                        .object(fileName)
-                        .stream(inputStream, inputStream.available(), -1)
-                        .build());
-        return getObjectUrl(bucketName, fileName);
+    public static String uploadAndGetObjectUrl(String bucketName, String objectName, InputStream inputStream) throws Exception {
+        uploadObject(bucketName, objectName, inputStream);
+        return getObjectUrl(bucketName, objectName);
     }
 
+    /**
+     * 上传对象
+     *
+     * @param bucketName  桶名
+     * @param fileName    文件名
+     * @param inputStream 对象流
+     * @return
+     * @throws Exception
+     */
+    public static ObjectWriteResponse uploadObject(String bucketName, String objectName, InputStream inputStream) throws Exception {
+        return minioClient.putObject(
+                PutObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .stream(inputStream, inputStream.available(), -1)
+                        .build());
+    }
+
+    /**
+     * 加密上传
+     *
+     * @param bucketName
+     * @param objectName
+     * @param inputStream
+     * @return
+     * @throws Exception
+     */
+    public static ObjectWriteResponse uploadObjectEncrypt(String bucketName, String objectName, InputStream inputStream) throws Exception {
+        return minioClient.putObject(
+                PutObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(objectName)
+                        .stream(inputStream, inputStream.available(), -1)
+                        .sse(new ServerSideEncryptionS3())
+                        .build());
+    }
 
     /**
      * 删除对象
@@ -140,8 +236,59 @@ public class MinioUtil {
      * @param bucketName 桶名
      * @param objectName 对象名
      */
-    public static void deleteObject(String bucketName, String objectName) throws Exception {
+    public static void removeObject(String bucketName, String objectName) throws Exception {
         minioClient.removeObject(RemoveObjectArgs.builder().bucket(bucketName).object(objectName).build());
+    }
+
+    /**
+     * 批量移除
+     *
+     * @param bucketName  桶名
+     * @param objectNames 对象名集合
+     */
+    public static void removeObjects(String bucketName, List<String> objectNames) {
+        if (CollectionUtil.isNotEmpty(objectNames)) {
+            List<DeleteObject> objects = objectNames.stream().map(DeleteObject::new).collect(Collectors.toList());
+            Iterable<Result<DeleteError>> results = minioClient.removeObjects(
+                    RemoveObjectsArgs.builder().bucket(bucketName).objects(objects).build());
+
+        }
+    }
+
+    /**
+     * 移除桶内所有对象
+     *
+     * @param bucketName 桶名
+     * @throws Exception
+     */
+    public static void removeObjects(String bucketName) throws Exception {
+        if (!bucketExists(bucketName)) return;
+
+        List<String> buketObjects = listObjects(bucketName);
+
+        removeObjects(bucketName, buketObjects);
+    }
+
+    /**
+     * 获取桶下所有objects
+     *
+     * @param buketName 桶名
+     * @return
+     * @throws Exception
+     */
+    public static List<String> listObjects(String buketName) throws Exception {
+        if (StrUtil.isNotBlank(buketName)) {
+            Iterable<Result<Item>> results = minioClient.listObjects(ListObjectsArgs.builder().bucket(buketName).build());
+
+            List<String> res = new ArrayList<>(10);
+            for (Result<Item> result : results) {
+                Item item = result.get();
+                String objectName = item.objectName();
+                res.add(objectName);
+            }
+            return res;
+        }
+        return Collections.emptyList();
     }
 
     /**
