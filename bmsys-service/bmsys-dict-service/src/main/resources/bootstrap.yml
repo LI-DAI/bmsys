@@ -15,9 +15,16 @@ spring:
     password:
     port: 6379
     timeout: 1000ms
-#    lettuce:
-#      pool:
-#        max-active: 8
-#        max-idle: 8
-#        min-idle: 0
-#        max-wait: -1ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+task:
+  pool:
+    core-pool-size: 10
+    max-pool-size: 30
+    keep-alive-seconds: 60
+    queue-capacity: 50
+
