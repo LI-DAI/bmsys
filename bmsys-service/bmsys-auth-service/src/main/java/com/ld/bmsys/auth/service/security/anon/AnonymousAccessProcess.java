@@ -4,7 +4,6 @@ import cn.hutool.cache.Cache;
 import cn.hutool.cache.CacheUtil;
 import com.google.common.collect.ImmutableSet;
 import com.ld.bmsys.auth.service.security.SecurityProperties;
-import com.ld.bmsys.auth.service.security.anon.AnonymousAccess;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
