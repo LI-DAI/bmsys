@@ -1,21 +1,19 @@
 package com.ld.bmsys.auth.service.security.anon;
 
-import cn.hutool.cache.Cache;
-import cn.hutool.cache.CacheUtil;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 import com.google.common.collect.ImmutableSet;
 import com.ld.bmsys.auth.service.security.SecurityProperties;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 
@@ -23,35 +21,35 @@ import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
  * @Author LD
  * @Date 2021/4/23 16:41
  */
-@Component
 public class AnonymousAccessProcess {
 
     private final SecurityProperties properties;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public static Cache<String, Set<String>> anonymousCache = CacheUtil.newFIFOCache(3);
+    public static Cache<String, Set<String>> anonymousCache;
 
-    public AnonymousAccessProcess(RequestMappingHandlerMapping requestMappingHandlerMapping, SecurityProperties properties) {
-        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
-        this.properties = properties;
+    public static void loadAnonymousAccessProcess(RequestMappingHandlerMapping requestMappingHandlerMapping, SecurityProperties properties) {
+        new AnonymousAccessProcess(requestMappingHandlerMapping, properties);
     }
 
-    @PostConstruct
+    private AnonymousAccessProcess(RequestMappingHandlerMapping requestMappingHandlerMapping, SecurityProperties properties) {
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+        this.properties = properties;
+        init();
+    }
+
     public void init() {
-
         Set<String> anonymousUri = new HashSet<>();
-
+        //从处理器映射器获取 handler methods
         Map<RequestMappingInfo, HandlerMethod> handlerMethodMap = requestMappingHandlerMapping.getHandlerMethods();
-
         for (Map.Entry<RequestMappingInfo, HandlerMethod> entry : handlerMethodMap.entrySet()) {
             HandlerMethod method = entry.getValue();
             AnonymousAccess annotation = method.getMethodAnnotation(AnonymousAccess.class);
             if (annotation != null) {
-                Secured secured = method.getMethodAnnotation(Secured.class);
-                PreAuthorize preAuthorize = method.getMethodAnnotation(PreAuthorize.class);
-                PostAuthorize postAuthorize = method.getMethodAnnotation(PostAuthorize.class);
                 //已标注权限注解的方法,默认不可以匿名访问
-                boolean anyMatch = Stream.of(secured, preAuthorize, postAuthorize).anyMatch(Objects::nonNull);
+                boolean anyMatch = method.hasMethodAnnotation(Secured.class)
+                        || method.hasMethodAnnotation(PreAuthorize.class)
+                        || method.hasMethodAnnotation(PostAuthorize.class);
                 if (anyMatch) continue;
                 RequestMappingInfo mappingInfo = entry.getKey();
                 Set<String> patterns = mappingInfo.getPatternsCondition().getPatterns();
@@ -61,6 +59,14 @@ public class AnonymousAccessProcess {
 
         Set<String> propertiesUri = properties.getAnonUri();
         Set<String> anon = ImmutableSet.of(anonymousUri, propertiesUri).stream().flatMap(Collection::stream).collect(Collectors.toSet());
+
+        CacheLoader<String, Set<String>> cacheLoader = new CacheLoader<String, Set<String>>() {
+            @Override
+            public Set<String> load(String key) throws Exception {
+                return Collections.EMPTY_SET;
+            }
+        };
+        anonymousCache = CacheBuilder.newBuilder().maximumSize(3).build(cacheLoader);
 
         anonymousCache.put(ANON_CACHE_KEY, anon);
     }

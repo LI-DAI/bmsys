@@ -1,6 +1,7 @@
 package com.ld.bmsys.auth.service.security;
 
 import cn.hutool.core.convert.Convert;
+import com.ld.bmsys.auth.service.security.anon.AnonymousAccessProcess;
 import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Set;
 
@@ -32,11 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsServiceImpl;
     private final SecurityProperties properties;
     private final PasswordEncoder passwordEncoder;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-    public SecurityConfig(SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
+    public SecurityConfig(SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder, RequestMappingHandlerMapping requestMappingHandlerMapping) {
         this.properties = properties;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
     }
 
     @Override
@@ -53,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        AnonymousAccessProcess.loadAnonymousAccessProcess(requestMappingHandlerMapping, properties);
         http
                 .addFilterBefore(new JwtAuthenticationFilter(userDetailsServiceImpl, properties), UsernamePasswordAuthenticationFilter.class)
                 //禁用csrf,
@@ -86,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     public String[] anonymousAccess() {
-        Set<String> cacheUri = anonymousCache.get(ANON_CACHE_KEY);
+        Set<String> cacheUri = anonymousCache.getIfPresent(ANON_CACHE_KEY);
         return Convert.toStrArray(cacheUri);
     }
 
