@@ -60,13 +60,7 @@ public class AnonymousAccessProcess {
         Set<String> propertiesUri = properties.getAnonUri();
         Set<String> anon = ImmutableSet.of(anonymousUri, propertiesUri).stream().flatMap(Collection::stream).collect(Collectors.toSet());
 
-        CacheLoader<String, Set<String>> cacheLoader = new CacheLoader<String, Set<String>>() {
-            @Override
-            public Set<String> load(String key) throws Exception {
-                return Collections.EMPTY_SET;
-            }
-        };
-        anonymousCache = CacheBuilder.newBuilder().maximumSize(3).build(cacheLoader);
+        anonymousCache = CacheBuilder.newBuilder().maximumSize(3).build();
 
         anonymousCache.put(ANON_CACHE_KEY, anon);
     }
