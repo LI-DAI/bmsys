@@ -5,8 +5,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author LD
- * @Date 2021/4/23 14:55
+ * @author LD
+ * @date 2021/4/23 14:55
  */
 @Component
 public class PersonRegisterListener2 {

@@ -26,8 +26,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * @Author LD
- * @Date 2021/4/22 16:30
+ * @author LD
+ * @date 2021/4/22 16:30
  */
 @Slf4j
 @Component

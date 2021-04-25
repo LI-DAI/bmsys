@@ -5,8 +5,8 @@ import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 /**
- * @Author LD
- * @Date 2021/4/23 14:37
+ * @author LD
+ * @date 2021/4/23 14:37
  */
 public class PersonRegisterEvent extends ApplicationEvent {
 

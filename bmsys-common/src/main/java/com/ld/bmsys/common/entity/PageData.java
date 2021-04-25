@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author ld
- * @Date 2020/3/5 10:56
+ * @author LD
+ * @date 2020/3/5 10:56
  */
 @Data
 public class PageData<T> implements Serializable {

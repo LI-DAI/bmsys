@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @Author ld
- * @Date 2020/4/18 16:26
+ * @author LD
+ * @date 2020/4/18 16:26
  */
 @Data
 @Accessors(chain = true)

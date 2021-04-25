@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author ld
- * @Date 2020/3/5 20:14
+ * @author LD
+ * @date 2020/3/5 20:14
  */
 @Slf4j
 @RestController

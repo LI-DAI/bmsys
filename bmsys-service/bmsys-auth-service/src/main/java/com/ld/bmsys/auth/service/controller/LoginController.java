@@ -24,8 +24,8 @@ import static com.ld.bmsys.common.constant.CommonConstant.AUTHENTICATION;
 import static com.ld.bmsys.common.constant.CommonConstant.getAuthoritiesCacheName;
 
 /**
- * @Author ld
- * @Date 2020/3/22 20:31
+ * @author LD
+ * @date 2020/3/22 20:31
  */
 @RestController
 @RequestMapping("")

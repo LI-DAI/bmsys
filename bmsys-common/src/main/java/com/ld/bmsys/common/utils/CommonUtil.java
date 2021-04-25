@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * @Author ld
- * @Date 2020/3/11 13:52
+ * @author LD
+ * @date 2020/3/11 13:52
  */
 public class CommonUtil {
 

@@ -6,8 +6,8 @@ import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.api.vo.SearchConditionVO;
 
 /**
- * @Author ld
- * @Date 2020/3/5 16:57
+ * @author LD
+ * @date 2020/3/5 16:57
  */
 public interface UserService extends IService<User> {
 

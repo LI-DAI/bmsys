@@ -17,8 +17,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @Author LD
- * @Date 2021/4/18 16:40
+ * @author LD
+ * @date 2021/4/18 16:40
  */
 @Slf4j
 public class IpUtil {

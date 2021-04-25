@@ -6,8 +6,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author LD
- * @Date 2021/4/23 14:46
+ * @author LD
+ * @date 2021/4/23 14:46
  * <p>
  * 监听用户注册事件,两种写法,另一种是使用注解@EventListener实现
  * 用户注册事件发布时,两个监听器都会出发,

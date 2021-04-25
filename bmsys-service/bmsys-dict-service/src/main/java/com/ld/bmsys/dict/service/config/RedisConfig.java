@@ -24,8 +24,8 @@ import java.util.stream.Stream;
 import static org.springframework.data.redis.cache.RedisCacheConfiguration.defaultCacheConfig;
 
 /**
- * @Author ld
- * @Date 2020/7/20 15:33
+ * @author LD
+ * @date 2020/7/20 15:33
  */
 @Slf4j
 @EnableCaching

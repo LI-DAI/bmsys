@@ -10,8 +10,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @Author ld
- * @Date 2020/4/18 11:59
+ * @author LD
+ * @date 2020/4/18 11:59
  */
 public class AuthUser implements UserDetails {
 

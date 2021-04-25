@@ -10,8 +10,8 @@ import java.sql.*;
 import java.time.LocalDateTime;
 
 /**
- * @Author ld
- * @Date 2020/9/1 16:19
+ * @author LD
+ * @date 2020/9/1 16:19
  * <p>
  * 将数据库中 TIMESTAMP 类型转化为 LocalDateTime
  */

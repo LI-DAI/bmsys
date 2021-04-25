@@ -1,8 +1,8 @@
 package com.ld.bmsys.common.constant;
 
 /**
- * @Author LD
- * @Date 2020/3/5 11:01
+ * @author LD
+ * @date 2020/3/5 11:01
  */
 public interface CommonConstant {
 

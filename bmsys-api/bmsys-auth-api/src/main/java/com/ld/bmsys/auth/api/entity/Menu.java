@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author ld
- * @Date 2020/3/5 21:39
+ * @author LD
+ * @date 2020/3/5 21:39
  */
 @Data
 @TableName(value = "bmsys_menu")

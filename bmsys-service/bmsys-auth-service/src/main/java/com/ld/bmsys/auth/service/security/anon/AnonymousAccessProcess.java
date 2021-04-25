@@ -20,8 +20,8 @@ import java.util.stream.Collectors;
 import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 
 /**
- * @Author LD
- * @Date 2021/4/23 16:41
+ * @author LD
+ * @date 2021/4/23 16:41
  */
 public class AnonymousAccessProcess {
 

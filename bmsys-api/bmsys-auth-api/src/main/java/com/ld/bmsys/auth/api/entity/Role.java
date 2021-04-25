@@ -12,8 +12,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author ld
- * @Date 2020/3/5 13:56
+ * @author LD
+ * @date 2020/3/5 13:56
  */
 @Data
 @TableName(value = "bmsys_role")

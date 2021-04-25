@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @Author ld
- * @Date 2020/3/5 17:10
+ * @author LD
+ * @date 2020/3/5 17:10
  */
 @FeignClient(name = CommonConstant.AUTH_SERVICE_NAME, fallbackFactory = UserApiFallback.class)
 @RequestMapping("/user")

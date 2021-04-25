@@ -11,8 +11,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @Author LD
- * @Date 2021/4/23 15:10
+ * @author LD
+ * @date 2021/4/23 15:10
  */
 @Slf4j
 @Configuration

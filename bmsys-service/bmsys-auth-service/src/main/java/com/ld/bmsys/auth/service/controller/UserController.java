@@ -15,8 +15,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * @Author ld
- * @Date 2020/3/5 13:56
+ * @author LD
+ * @date 2020/3/5 13:56
  */
 @RestController
 @RequestMapping("/user")

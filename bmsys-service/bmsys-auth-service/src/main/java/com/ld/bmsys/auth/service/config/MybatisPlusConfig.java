@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author LD
- * @Date 2021/4/17 14:18
+ * @author LD
+ * @date 2021/4/17 14:18
  */
 @Configuration
 @MapperScan("com.ld.bmsys.auth.service.dao")

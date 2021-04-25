@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author ld
- * @Date 2021/4/15 16:54
+ * @author LD
+ * @date 2021/4/15 16:54
  */
 @RestController
 @RequestMapping("/auth/test")

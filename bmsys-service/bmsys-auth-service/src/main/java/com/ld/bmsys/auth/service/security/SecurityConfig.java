@@ -24,8 +24,8 @@ import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 import static com.ld.bmsys.common.utils.CommonUtil.print;
 
 /**
- * @Author ld
- * @Date 2020/3/5 16:53
+ * @author LD
+ * @date 2020/3/5 16:53
  */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)

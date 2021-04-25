@@ -5,8 +5,8 @@ import com.ld.bmsys.auth.api.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @Author ld
- * @Date 2020/3/5 13:56
+ * @author LD
+ * @date 2020/3/5 13:56
  */
 public interface UserMapper extends BaseMapper<User> {
 

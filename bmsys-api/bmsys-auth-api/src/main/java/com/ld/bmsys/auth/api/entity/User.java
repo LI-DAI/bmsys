@@ -16,8 +16,8 @@ import java.util.Date;
 import static com.ld.bmsys.common.constant.CommonConstant.REGEX_PHONE;
 
 /**
- * @Author ld
- * @Date 2020/3/5 13:56
+ * @author LD
+ * @date 2020/3/5 13:56
  */
 @Data
 @ApiModel(value = "用户")

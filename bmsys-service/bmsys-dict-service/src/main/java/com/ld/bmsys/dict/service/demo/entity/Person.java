@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @Author LD
- * @Date 2021/4/23 14:35
+ * @author LD
+ * @date 2021/4/23 14:35
  */
 @Data
 @AllArgsConstructor

@@ -14,8 +14,8 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDateTime;
 
 /**
- * @Author LD
- * @Date 2021/4/22 17:38
+ * @author LD
+ * @date 2021/4/22 17:38
  */
 @RestController
 @RequestMapping("/minio")

@@ -7,8 +7,8 @@ import feign.hystrix.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author ld
- * @Date 2020/3/5 17:13
+ * @author LD
+ * @date 2020/3/5 17:13
  */
 @Component
 public class UserApiFallback implements FallbackFactory<UserApi> {

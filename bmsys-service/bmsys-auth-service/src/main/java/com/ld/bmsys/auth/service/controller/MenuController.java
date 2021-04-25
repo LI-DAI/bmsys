@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @Author LD
- * @Date 2021/4/22 10:39
+ * @author LD
+ * @date 2021/4/22 10:39
  */
 @RestController
 @RequestMapping("/menu")

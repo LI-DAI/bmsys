@@ -3,8 +3,8 @@ package com.ld.bmsys.auth.service.security.anon;
 import java.lang.annotation.*;
 
 /**
- * @Author LD
- * @Date 2021/4/23 16:41
+ * @author LD
+ * @date 2021/4/23 16:41
  * <p>
  * 匿名访问注解
  */

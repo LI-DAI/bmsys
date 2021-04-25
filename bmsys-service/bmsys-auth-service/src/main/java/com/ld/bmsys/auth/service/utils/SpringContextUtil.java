@@ -10,8 +10,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author LD
- * @Date 2021/4/18 16:34
+ * @author LD
+ * @date 2021/4/18 16:34
  */
 @Slf4j
 @Component

@@ -30,8 +30,8 @@ import static com.ld.bmsys.common.constant.CommonConstant.getAuthoritiesCacheNam
 import static java.util.stream.Collectors.toList;
 
 /**
- * @Author ld
- * @Date 2021/4/16 9:23
+ * @author LD
+ * @date 2021/4/16 9:23
  */
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {

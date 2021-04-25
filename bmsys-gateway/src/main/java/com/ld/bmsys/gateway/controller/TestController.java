@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author ld
- * @Date 2020/7/20 14:05
+ * @author LD
+ * @date 2020/7/20 14:05
  */
 @RestController
 @RequestMapping("/test")

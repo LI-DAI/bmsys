@@ -1,8 +1,8 @@
 package com.ld.bmsys.common.exception;
 
 /**
- * @Author LD
- * @Date 2021/4/18 11:09
+ * @author LD
+ * @date 2021/4/18 11:09
  */
 public class BadRequestException extends RuntimeException{
 

@@ -31,8 +31,8 @@ import static com.ld.bmsys.common.constant.CommonConstant.AUTHENTICATION;
 import static com.ld.bmsys.common.utils.CommonUtil.print;
 
 /**
- * @Author ld
- * @Date 2020/3/7 14:46
+ * @author LD
+ * @date 2020/3/7 14:46
  */
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

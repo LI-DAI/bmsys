@@ -5,8 +5,8 @@ import com.ld.bmsys.auth.service.security.vo.AuthUser;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author ld
- * @Date 2020/4/18 16:29
+ * @author LD
+ * @date 2020/4/18 16:29
  */
 public interface OnlineUserService {
 

@@ -6,8 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @Author LD
- * @Date 2021/4/21 14:54
+ * @author LD
+ * @date 2021/4/21 14:54
  */
 @Configuration
 public class WebConfig {

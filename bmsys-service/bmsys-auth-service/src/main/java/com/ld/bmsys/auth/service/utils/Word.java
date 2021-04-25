@@ -23,7 +23,7 @@
 ///**
 // *
 // * @author unknown
-// * @Date 2020年3月2日
+// * @date 2020年3月2日
 // * @Time 下午1:41:31
 // */
 //public class Word {
@@ -47,7 +47,7 @@
 //    /**
 //     *
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午1:42:17
 //     * @param fileName 模板数据
 //     * @param map 数据格式为Map<String,String>
@@ -62,7 +62,7 @@
 //    /**
 //     * poi 查找word中占位符并替换
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午1:41:40
 //     * @param oPCPackage 模板数据
 //     * @param map 数据格式为Map<String,String>
@@ -77,7 +77,7 @@
 //    /**
 //     * poi 查找word中占位符并替换
 //     * @author unknown
-//     * @Date 2020年2月28日
+//     * @date 2020年2月28日
 //     * @Time 下午1:59:19
 //     * @param Document 模板数据
 //     * @param map 数据格式为Map<String,String>
@@ -107,7 +107,7 @@
 //    /**
 //     * poi 查找word表格中占位符并替换
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午2:01:47
 //     * @param itTable
 //     * @param map
@@ -204,7 +204,7 @@
 //    /**
 //     * poi 查找word表格中占位符并替换
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午2:39:10
 //     * @param tables
 //     * @param map
@@ -217,7 +217,7 @@
 //    /**
 //     * poi 查找word段落中占位符并替换
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午2:02:18
 //     * @param itPara
 //     * @param map
@@ -368,7 +368,7 @@
 //    /**
 //     *
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 下午3:51:17
 //     * @param paragraph
 //     * @param map
@@ -381,7 +381,7 @@
 //    /**
 //     * 创建简单表格
 //     * @author unknown
-//     * @Date 2020年2月28日
+//     * @date 2020年2月28日
 //     * @Time 下午4:44:03
 //     * @param obj 单元格或者文档
 //     * @param table 表格数据
@@ -470,7 +470,7 @@
 //    /**
 //     *新的表格对象（面向数据），简单表格（目前只能在表格中使用暂时无法定位段落）
 //     * @author unknown
-//     * @Date 2020年3月2日
+//     * @date 2020年3月2日
 //     * @Time 上午10:40:08
 //     */
 //    public static class WordTable {

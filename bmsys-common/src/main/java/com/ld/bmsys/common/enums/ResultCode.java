@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Author ld
- * @Date 2020/3/5 10:57
+ * @author LD
+ * @date 2020/3/5 10:57
  */
 @Getter
 @AllArgsConstructor
