@@ -3,6 +3,7 @@ package com.ld.bmsys.dict.service.controller;
 import com.ld.bmsys.auth.api.entity.User;
 import com.ld.bmsys.auth.api.feign.UserApi;
 import com.ld.bmsys.common.entity.Result;
+import com.ld.bmsys.dict.service.service.CodeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,11 @@ public class CodeController {
 
     private final UserApi userApi;
 
-    public CodeController(UserApi userApi) {
+    private final CodeService codeService;
+
+    public CodeController(UserApi userApi, CodeService codeService) {
         this.userApi = userApi;
+        this.codeService = codeService;
     }
 
     @GetMapping("/get")
@@ -33,5 +37,8 @@ public class CodeController {
         return userApi.findUserByUsername(username);
     }
 
+    public void test() {
+        codeService.test();
+    }
 
 }
