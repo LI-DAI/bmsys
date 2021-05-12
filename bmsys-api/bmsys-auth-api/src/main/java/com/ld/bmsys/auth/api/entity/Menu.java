@@ -1,5 +1,6 @@
 package com.ld.bmsys.auth.api.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -46,6 +47,7 @@ public class Menu implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    @TableField(exist = false)
     private List<Menu> children;
 
     public Menu() {

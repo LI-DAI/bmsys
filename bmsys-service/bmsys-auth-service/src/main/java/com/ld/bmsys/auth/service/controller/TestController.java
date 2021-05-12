@@ -51,9 +51,11 @@ public class TestController {
 //        ip = "112.86.218.124";
 
         String cityInfo = IpUtil.getCityInfo(ip, true);
+        System.out.println(cityInfo);
 
         String httpCityInfo = IpUtil.getCityInfo(ip, false);
-
+        System.out.println(httpCityInfo);
+        
         return Result.data("this is test");
     }
 

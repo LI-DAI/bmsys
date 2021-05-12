@@ -2,11 +2,15 @@ package com.ld.bmsys.auth.service.security;
 
 import cn.hutool.core.convert.Convert;
 import com.ld.bmsys.auth.service.security.anon.AnonymousAccessProcess;
+import com.ld.bmsys.auth.service.security.url.UrlAccessDecisionManager;
+import com.ld.bmsys.auth.service.security.url.UrlFilterInvocationSecurityMetadataSource;
+import com.ld.bmsys.auth.service.service.MenuService;
 import com.ld.bmsys.common.entity.Result;
 import com.ld.bmsys.common.enums.ResultCode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -35,12 +40,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecurityProperties properties;
     private final PasswordEncoder passwordEncoder;
     private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+    private final MenuService menuService;
 
-    public SecurityConfig(SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder, RequestMappingHandlerMapping requestMappingHandlerMapping) {
+    public SecurityConfig(SecurityProperties properties, UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder, RequestMappingHandlerMapping requestMappingHandlerMapping, MenuService menuService) {
         this.properties = properties;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.passwordEncoder = passwordEncoder;
         this.requestMappingHandlerMapping = requestMappingHandlerMapping;
+        this.menuService = menuService;
     }
 
     @Override
@@ -74,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/websocket/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
+                .withObjectPostProcessor(objectPostProcessor())
                 .and()
                 .exceptionHandling()
                 //未登录处理
@@ -83,12 +91,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-//    @Override
+    public ObjectPostProcessor<FilterSecurityInterceptor> objectPostProcessor() {
+        return new ObjectPostProcessor<FilterSecurityInterceptor>() {
+            @Override
+            public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                object.setSecurityMetadataSource(urlFilterInvocationSecurityMetadataSource(menuService));
+                object.setAccessDecisionManager(urlAccessDecisionManager());
+                return object;
+            }
+        };
+    }
+
+    //    @Override
 //    public void configure(WebSecurity web) throws Exception {
 //        //自定义过滤器资源放行，所有过滤器都不执行(permitAll放行时仍然会执行过滤器)
 //        web.ignoring().antMatchers(anonymousAccess()).antMatchers(HttpMethod.OPTIONS, "/**");
 //    }
+    @Bean
+    public UrlFilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource(MenuService menuService) {
+        return new UrlFilterInvocationSecurityMetadataSource(menuService);
+    }
 
+    @Bean
+    public UrlAccessDecisionManager urlAccessDecisionManager() {
+        return new UrlAccessDecisionManager();
+    }
 
     public String[] anonymousAccess() {
         Set<String> cacheUri = anonymousCache.getIfPresent(ANON_CACHE_KEY);

@@ -21,11 +21,4 @@ public interface MenuMapper extends BaseMapper<Menu> {
      */
     List<Menu> getMenuByUserId(@Param("userId") Integer userId);
 
-    /**
-     * 获取所有菜单
-     *
-     * @return
-     */
-    @Select(value = "select * from bmsys_menu")
-    List<Menu> getAllMenus();
 }

@@ -24,7 +24,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private final MenuMapper menuMapper;
     private final RedisUtil redisUtil;
 
-    public MenuServiceImpl(MenuMapper menuMapper,RedisUtil redisUtil) {
+    public MenuServiceImpl(MenuMapper menuMapper, RedisUtil redisUtil) {
         this.menuMapper = menuMapper;
         this.redisUtil = redisUtil;
     }
@@ -32,8 +32,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     @Cacheable(cacheNames = "menu", key = "'all'")
     public List<Menu> loadAllMenus() {
-        List<Menu> menus = menuMapper.getAllMenus();
-        return treeMenu(menus, 0);
+        return treeMenu(list(), 0);
     }
 
     @Override
@@ -54,8 +53,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
 
-    public void clearMenuCache(List<Integer> userIds){
-        if(CollectionUtil.isEmpty(userIds)){
+    public void clearMenuCache(List<Integer> userIds) {
+        if (CollectionUtil.isEmpty(userIds)) {
         }
     }
 }
