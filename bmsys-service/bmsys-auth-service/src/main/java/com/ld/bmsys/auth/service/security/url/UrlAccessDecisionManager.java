@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * @author LD
@@ -33,10 +32,10 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
         if (Collections.isEmpty(configAttributes)) {
             throw new AccessDeniedException("not allow");
         }
-        Iterator<ConfigAttribute> iterator = configAttributes.iterator();
-        while (iterator.hasNext()) {
-            ConfigAttribute attribute = iterator.next();
-            String need = attribute.getAttribute();
+
+        for (ConfigAttribute configAttribute : configAttributes) {
+
+            String need = configAttribute.getAttribute();
 
             if (need.equals("ROLE_LOGIN")) {
                 if (authentication instanceof AnonymousAuthenticationToken) {
