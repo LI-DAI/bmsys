@@ -82,8 +82,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
         Set<String> cacheUri = anonymousCache.getIfPresent(ANON_CACHE_KEY);
-        for (String path : cacheUri) {
-            if (pathMatcher.match(path, request.getRequestURI())) {
+        for (String pattern : cacheUri) {
+            if (pathMatcher.match(pattern, request.getRequestURI())) {
                 return true;
             }
         }

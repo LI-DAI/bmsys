@@ -107,6 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        //自定义过滤器资源放行，所有过滤器都不执行(permitAll放行时仍然会执行过滤器)
 //        web.ignoring().antMatchers(anonymousAccess()).antMatchers(HttpMethod.OPTIONS, "/**");
 //    }
+
     @Bean
     public UrlFilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource(MenuService menuService) {
         return new UrlFilterInvocationSecurityMetadataSource(menuService);

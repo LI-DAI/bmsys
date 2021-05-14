@@ -48,3 +48,27 @@ minio:
   access-key: minioadmin
   secret-key: minioadmin
   secure: false
+
+security:
+  custom:
+    anon-uri:
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /**/*.html
+      - /*.html
+      - /swagger-ui.html
+      - /swagger-ui/**
+      - /swagger-resources/**
+      - /v2/api-docs
+      - /v3/api-docs
+      - /webjars/**
+      - /login
+      - /user/register
+      - /auth/login
+      - /auth/test/noCheck
+      - /webSocket/**
+    header: Token
+    token-validity-in-hours: 2
+    online-key: Bearer

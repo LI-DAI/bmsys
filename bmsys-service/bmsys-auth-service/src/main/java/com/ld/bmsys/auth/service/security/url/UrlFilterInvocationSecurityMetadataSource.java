@@ -8,11 +8,11 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.ld.bmsys.auth.service.security.anon.AnonymousAccessProcess.anonymousCache;
+import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 
 /**
  * @author LD
@@ -30,9 +30,16 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+
         FilterInvocation invocation = (FilterInvocation) object;
 
         String requestUrl = invocation.getRequestUrl();
+        Set<String> anonCachePattern = anonymousCache.getIfPresent(ANON_CACHE_KEY);
+        for (String pattern : anonCachePattern) {
+            //匿名访问
+            if (pathMatcher.match(pattern, requestUrl)) return null;
+        }
+
         Map<String, String> requestMap = requestMap();
         for (Map.Entry<String, String> entry : requestMap.entrySet()) {
             if (pathMatcher.match(requestUrl, entry.getKey())) {
@@ -40,7 +47,7 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
             }
         }
 
-        return null;
+        return SecurityConfig.createList("ROLE_LOGIN");
     }
 
     @Override

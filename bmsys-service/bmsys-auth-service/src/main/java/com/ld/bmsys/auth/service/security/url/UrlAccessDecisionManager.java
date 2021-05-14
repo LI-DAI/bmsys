@@ -4,7 +4,8 @@ import io.jsonwebtoken.lang.Collections;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +36,15 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
         Iterator<ConfigAttribute> iterator = configAttributes.iterator();
         while (iterator.hasNext()) {
             ConfigAttribute attribute = iterator.next();
-            String need = ((SecurityConfig) attribute).getAttribute();
+            String need = attribute.getAttribute();
+
+            if (need.equals("ROLE_LOGIN")) {
+                if (authentication instanceof AnonymousAuthenticationToken) {
+                    throw new AuthenticationServiceException("未认证");
+                } else {
+                    return;
+                }
+            }
 
             for (GrantedAuthority authority : authentication.getAuthorities()) {
                 if (authority.getAuthority().equals(need)) {
