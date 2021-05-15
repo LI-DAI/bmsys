@@ -34,11 +34,6 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
         FilterInvocation invocation = (FilterInvocation) object;
 
         String requestUrl = invocation.getRequestUrl();
-        Set<String> anonCachePattern = anonymousCache.getIfPresent(ANON_CACHE_KEY);
-        for (String pattern : anonCachePattern) {
-            //匿名访问
-            if (pathMatcher.match(pattern, requestUrl)) return null;
-        }
 
         Map<String, String> requestMap = requestMap();
         for (Map.Entry<String, String> entry : requestMap.entrySet()) {

@@ -30,7 +30,7 @@ public class TestController {
     }
 
     @GetMapping("")
-//    @PreAuthorize("hasAnyAuthority('user:add')")
+    @PreAuthorize("hasAnyAuthority('user:add')")
     public Result<String> testAuthority() {
         return Result.data("this is test");
     }
@@ -38,7 +38,7 @@ public class TestController {
 
     @GetMapping("/role")
     @Secured(value = "ROLE_COMMON")
-    @AnonymousAccess
+//    @PreAuthorize("hasRole('ROLE_COMMON')")
     public Result<String> testRole() {
         return Result.data("this is test");
     }
