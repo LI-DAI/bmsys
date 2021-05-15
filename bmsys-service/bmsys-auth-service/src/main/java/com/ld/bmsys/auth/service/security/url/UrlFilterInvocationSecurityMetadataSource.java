@@ -8,11 +8,11 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.util.AntPathMatcher;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.ld.bmsys.auth.service.security.anon.AnonymousAccessProcess.anonymousCache;
-import static com.ld.bmsys.common.constant.CommonConstant.ANON_CACHE_KEY;
 
 /**
  * @author LD

@@ -1,6 +1,5 @@
 package com.ld.bmsys.auth.service.security.url;
 
-import io.jsonwebtoken.lang.Collections;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
@@ -29,12 +28,10 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
      */
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        if (Collections.isEmpty(configAttributes)) {
-            throw new AccessDeniedException("not allow");
-        }
 
         for (ConfigAttribute configAttribute : configAttributes) {
 
+            //访问需要的权限
             String need = configAttribute.getAttribute();
 
             if (need.equals("ROLE_LOGIN")) {
@@ -52,7 +49,7 @@ public class UrlAccessDecisionManager implements AccessDecisionManager {
                 }
             }
 
-            throw new AccessDeniedException("not allow");
+            throw new AccessDeniedException("Access is denied");
         }
     }
 

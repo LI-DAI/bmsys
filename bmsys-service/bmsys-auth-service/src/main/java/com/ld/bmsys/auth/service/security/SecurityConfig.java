@@ -77,10 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                //匿名访问
-//                .antMatchers(anonymousAccess()).permitAll()
-//                .antMatchers().permitAll()
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .withObjectPostProcessor(objectPostProcessor())
                 .and()
